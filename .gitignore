@@ -3,3 +3,5 @@
 node_modules/
 
 *.min.js
+
+npm-debug.log
