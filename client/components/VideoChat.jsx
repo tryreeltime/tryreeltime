@@ -20,6 +20,9 @@ class VideoChat extends React.Component {
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
+      .then(function(stream){
+        console.log(stream);
+      })
       .then(this.setUpVideoStream)
       .catch(console.error.bind(console));
   }
