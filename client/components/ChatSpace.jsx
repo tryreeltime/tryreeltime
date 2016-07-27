@@ -75,6 +75,7 @@ class ChatSpace extends React.Component {
     });
   }
 
+// TODO: use id instead of map(i) for unique key.
   render() {
     return (
       <div className="chat-space">
