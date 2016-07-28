@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 // the base URL for the Kairos API
   var baseUrl = 'https://api.kairos.com/'
 
@@ -96,20 +98,31 @@
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
-      // NOTE: do we need to display the captured img?
-
       var data = canvas.toDataURL('image/png'); // base64 encoded.
-      doAuth();
-      // TODO: send data to Kairos? (data, username)
+      console.log('takepicture!');
+
+      // TODO: somewhere either here or in doAuth we need to send the image `data` to AWS S3 and return the URL for sending to Kairos.
+
+      doAuth(data, username);
+    } else {
+      clearphoto();
+    }
+  }
+
+  function takemorepictures() {
+    var context = canvas.getContext('2d');
+    if (width && height) {
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(video, 0, 0, width, height);
+      var data = canvas.toDataURL('image/png'); // base64 encoded.
+      return data;
     } else {
       clearphoto();
     }
   }
 
   function doAuth(image, username) {
-    var username = username || 'not passed down'; // TEST
-    console.log('username in doAuth', username); // TEST.
-
     var url = baseUrl + 'gallery/list_all';
 
     fetch(url, {
@@ -122,14 +135,48 @@
       return res.json();
     }).then( (data) => {
       console.log('response /gallery/list_all', data);
-      // TODO: if contains username, postKairos(recognize, image, username)
-      // else postKairos(enroll, image, username) and take 8 images... ?
+
+      if (_.indexOf(data.gallery_ids, username) > -1) {
+        postKairos('recognize', image, username);
+      } else {
+        postKairos('enroll', image, username);
+
+        // '/recognize' works best with 6-8 images for a person.
+        // so we upload several images on '/enroll'
+        for (var i = 0; i < 6; i++) {
+          var image = takemorepictures();
+          postKairos('enroll', image, username);
+        } // NOTE: need to also post those to AWS.
+      }
     }).catch( (err) => {
       console.error('err in post gallery/list_all', err);
     });
   }
 
   function postKairos(endpoint, image, username) {
+    console.log('firing of a request to', endpoint, 'for user', username);
+    var body;
+
+    // test with a person img - WORKS! - NOTE: remove for production
+    image = 'http://www.rodamarketing.com/wp-content/uploads/2014/07/Smiling-Man.jpg';
+
+    if (endpoint === 'recognize') {
+      body = {
+        image: image,
+        gallery_name: username
+      }
+    } else { // '/enroll'
+      body = {
+       image: image,
+       subject_id: username,
+       "minHeadScale":".125",
+       "multiple_faces":"false", // we don't want multiple people for auth
+       'selector': 'EYES', // options: FACE , EYES , FULL , SETPOSE
+       'symmetricFill': 'true',
+       gallery_name: username
+     };
+    }
+
     var url = baseUrl + endpoint;
     fetch(url, {
       method: 'POST',
@@ -138,16 +185,13 @@
         app_id: 'cd1b9d6a',
         app_key: 'c72a50a9f99308c9eb7ac0f531b9cf75'
       },
-      body: {
-        image: image,
-        gallery_name: username
-      }
+      body: JSON.stringify(body)
     }).then( (res) => {
       return res.json();
     }).then( (data) => {
-      console.log(data);
-      // returns ... ?
+      console.log('response on postKairos', endpoint, 'with', data);
       // TODO: something after successful enrollment or auth.
+      return; // resolves promise.
     }).catch( (err) => {
       console.log('error Kairos Facial Rec. POST', err);
     })
