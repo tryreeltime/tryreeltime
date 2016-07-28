@@ -1,7 +1,6 @@
 import React from 'react';
-
+import startup from './../lib/captureStills.js';
 // className = "auth"
-
 
 class Auth extends React.Component {
   constructor(props) {
@@ -22,6 +21,7 @@ class Auth extends React.Component {
   handleSubmit() {
     this.setState({username: this.state.textinput});
     this.setState({showCamera: true});
+    startup(this.state.username); // passing down to doAuth in /captureStills
   }
 
   // TODO: style button
@@ -33,7 +33,6 @@ class Auth extends React.Component {
         <input className="authText" type='text' value={this.state.textinput}
               onChange={this.handleInput.bind(this)}></input>
         <button className="authText" onClick={this.handleSubmit.bind(this)}>Authenticate</button>
-        {this.state.showCamera ? <p>canvas</p> : null}
       </div>
     )
   }
