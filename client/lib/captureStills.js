@@ -145,6 +145,7 @@ import _ from 'underscore';
         // '/recognize' works best with 6-8 images for a person.
         // so we upload several images on '/enroll'
         // TODO: should show user a counter of sorts.
+        // NOTE: timer to ensure the pictures are somewhat different.
         for (let i = 0; i < 6; i++) {
           window.setTimeout( () => {
             let image = takemorepictures();
