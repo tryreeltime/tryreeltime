@@ -1,6 +1,5 @@
 import _ from 'underscore';
 
-
 // the base URL for the Kairos API
   var baseUrl = 'https://api.kairos.com/'
 
@@ -145,9 +144,12 @@ import _ from 'underscore';
 
         // '/recognize' works best with 6-8 images for a person.
         // so we upload several images on '/enroll'
-        for (var i = 0; i < 6; i++) {
-          var image = takemorepictures();
-          postKairos('enroll', image, username);
+        // TODO: should show user a counter of sorts.
+        for (let i = 0; i < 6; i++) {
+          window.setTimeout( () => {
+            let image = takemorepictures();
+            postKairos('enroll', image, username);
+          }, 1000);
         } // NOTE: need to also post those to AWS.
       }
     }).catch( (err) => {
@@ -192,8 +194,20 @@ import _ from 'underscore';
       return res.json();
     }).then( (data) => {
       console.log('response on postKairos', endpoint, 'with', data);
-      // TODO: something after successful enrollment or auth.
+
+      if (endpoint === 'recognize') {
+        data.images[0].candidates = data.images[0].candidates || [];
+        if (data.images[0].candidates.length > 0) {
+          console.log('successful /recognize'); // TODO: something.
+        } else {
+          console.log('auth denied, user not recognized'); // TODO: something
+        }
+      } else {
+        console.log('successful /enroll'); // TODO: something.
+      }
+
       return; // resolves promise.
+
     }).catch( (err) => {
       console.log('error Kairos Facial Rec. POST', err);
     })
