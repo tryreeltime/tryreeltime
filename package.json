@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/MomentousGeese/ReelTime#readme",
   "dependencies": {
+    "aws-sdk": "^2.4.10",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "peer": "^0.2.8",
     "peerjs": "^0.3.14",
