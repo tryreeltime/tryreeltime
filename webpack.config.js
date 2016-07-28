@@ -1,4 +1,5 @@
 var debug = process.env.NODE_ENV !== "production";
+process.env.AWS_SERVICES = 's3';
 var webpack = require('webpack');
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
     filename: "client.min.js"
   },
   module: {
+    noParse: [/aws-sdk/],
     loaders: [
       {
         test: /\.jsx?$/,
@@ -22,6 +24,15 @@ module.exports = {
         query: {
           presets: ['react', "es2015"]
         }
+      }, 
+      {
+        test: /aws-sdk/,
+        loaders: [
+         'transform?aws-sdk/dist-tools/transform'
+        ] 
+      },
+      {
+        test: /\.json$/, loaders: ['json']
       }
     ]
   },
@@ -30,4 +41,7 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ],
+  // node: {
+  //   fs: "empty"
+  // }, 
 };

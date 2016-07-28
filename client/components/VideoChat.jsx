@@ -2,6 +2,7 @@ import React from 'react';
 
 import { establishPeerCall } from '../lib/webrtc';
 
+
 class VideoChat extends React.Component {
   constructor(props) {
     super(props);
@@ -44,28 +45,13 @@ class VideoChat extends React.Component {
           console.log('file', file);
 
           var reader = new FileReader();
-          var url = 'http://localhost:3000'; // TODO: change.
+          // var url = 'http://localhost:3000'; // TODO: change.
 
           reader.onload = function( e ) {
-
-            fetch( url , {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": 'video/webm' // NOTE: video/mp4 ?
-                    },
-                    body: e.currentTarget.result
-                } )
-                // .then( (res) => res.json() )
-                .then( ( data ) => {
-                    console.info( 'Request succeeded with JSON response', data );
-                } )
-                .catch( ( error ) => {
-                    console.error( 'Request failed', error );
-                } );
-
-            }.bind( this );
-
-            reader.readAsText( file );
+            // console.log('currentTarget.result :', e.currentTarget.result);
+            this.props.socket.emit('videoFile', e.currentTarget.result);
+          }.bind( this );
+          reader.readAsText( file );
         };
 
         mediaRecorder.start();
@@ -73,8 +59,13 @@ class VideoChat extends React.Component {
         window.setTimeout( () => {
           mediaRecorder.stop(); // TODO: move this event elsewhere ?
         }, 5000)
-
-      }).then(this.setUpVideoStream)
+        return localStream;
+      })
+      .then(function(whatisEVENHERE){
+        console.log('nutherCheck', whatisEVENHERE);
+        return whatisEVENHERE;
+      })
+      .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
   }
 

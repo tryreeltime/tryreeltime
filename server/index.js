@@ -2,6 +2,7 @@
 const express = require('express');
 const socket = require('socket.io');
 const http = require('http');
+const s3 = require('./s3.js');
 
 // Init
 const app = express();
@@ -45,6 +46,13 @@ io.on('connection', (socket) => {
   socket.on('pause', (time) => {
     console.log('Pause command recieved');
     socket.broadcast.emit('pause', time);
+  });
+
+///
+  socket.on('videoFile', (theVideo) => {
+    console.log('what makes it into vidSocket',theVideo);
+    console.log('Video File received via socket');
+    s3.postTheVido(theVideo);
   });
 });
 
