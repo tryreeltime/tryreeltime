@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from './Auth.jsx';
 
 const Landing = (props) => (
   <div id="page-top" className="index landing">
@@ -14,6 +15,8 @@ const Landing = (props) => (
         <div className="intro-text">
           <div className="intro-lead-in">Watch TV with your friends</div>
           <div className="intro-heading">But in your underwear</div>
+          <p className="auth">For Auth Enter Username:</p>
+          <Auth className="auth"/>
           <p className="landing-drop-text landing-circle">
             Drop Your Video File Here
             <input type="file" id="files" className="landing-circle drop-box" name="file" onChange={props.setFile} />
@@ -33,7 +36,7 @@ const Landing = (props) => (
           <div className="col-md-4">
             <span className="fa-stack fa-4x">
               <i className="fa fa-circle fa-stack-2x text-primary"></i>
-              <i className="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+              <i className="fa fa-users fa-stack-1x fa-inverse"></i>
             </span>
             <h4 className="service-heading">Peer-to-peer</h4>
             <p className="text-muted">No need for a centralized, bandwidth-heavy, insecure server. ReelTime uses direct peer-to-peer connections, sending video directly from one client to another.</p>
