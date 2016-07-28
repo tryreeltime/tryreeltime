@@ -52,7 +52,19 @@ io.on('connection', (socket) => {
   socket.on('videoFile', (theVideo) => {
     console.log('what makes it into vidSocket',theVideo);
     console.log('Video File received via socket');
-    s3.postTheVideo(theVideo);
+    var result = s3.postTheVideo(theVideo);
+    console.log('is there a result obj?', result);
+    console.log(result.url);
+    //how do i send back data??
+  });
+
+    socket.on('photoFile', (thePhoto) => {
+    console.log('what makes it into vidSocket',thePhoto);
+    console.log('Photo File received via socket');
+    var result = s3.postTheVideo(thePhoto);
+    console.log('is there a result obj?', result);
+    console.log(result.url);
+    //how do i send back data??
   });
 });
 
