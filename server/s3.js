@@ -10,11 +10,12 @@ AWS.config.update({region:'us-west-2'});
 
 
 const postTheVideo = (file) => {
+  console.log('you made it to your s3call')
  s3.createBucket({Bucket: process.env.bucket}, function() {
  	//THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
   var params = {
   	Bucket: process.env.bucket,
-    Key: 'I uploaded a file!',
+    Key: 'I uploaded a file!!!',
     Body: file
   };
 

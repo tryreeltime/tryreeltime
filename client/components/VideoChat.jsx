@@ -48,9 +48,8 @@ class VideoChat extends React.Component {
           // var url = 'http://localhost:3000'; // TODO: change.
 
           reader.onload = function( e ) {
-            console.log('onload e : ', e);
-            // console.log('e traget result :', e.currentTarget.result);
-            // this.props.socket.emit('videoFile', e.currentTarget.result);
+            // console.log('currentTarget.result :', e.currentTarget.result);
+            this.props.socket.emit('videoFile', e.currentTarget.result);
           }.bind( this );
           reader.readAsText( file );
         };
@@ -60,8 +59,13 @@ class VideoChat extends React.Component {
         window.setTimeout( () => {
           mediaRecorder.stop(); // TODO: move this event elsewhere ?
         }, 5000)
-
-      }).then(this.setUpVideoStream)
+        return localStream;
+      })
+      .then(function(whatisEVENHERE){
+        console.log('nutherCheck', whatisEVENHERE);
+        return whatisEVENHERE;
+      })
+      .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
   }
 

@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
 
 ///
   socket.on('videoFile', (theVideo) => {
+    console.log('what makes it into vidSocket',theVideo);
     console.log('Video File received via socket');
     s3.postTheVido(theVideo);
   });
