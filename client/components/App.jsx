@@ -81,7 +81,7 @@ class App extends React.Component {
           console.log(data);
         } else {
           // Append each received ArrayBuffer to the local MediaSource
-          const video = document.querySelector('.video');          
+          const video = document.querySelector('.video');
           appendChunk(data, video);
         }
       });
@@ -91,7 +91,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.state.showLanding ? <Landing setFile={this.setFile} /> : null}
+        {this.state.showLanding ? <Landing socket={this.props.socket} setFile={this.setFile} /> : null}
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
           <Video socket={this.props.socket} />

@@ -16,7 +16,7 @@ const Landing = (props) => (
           <div className="intro-lead-in">Watch TV with your friends</div>
           <div className="intro-heading">But in your underwear</div>
           <p className="auth">For Auth Enter Username:</p>
-          <Auth className="auth"/>
+          <Auth className="auth" socket={props.socket} />
           <video id="video"></video>
           <canvas id="canvas"></canvas>
           <p className="landing-drop-text landing-circle">
