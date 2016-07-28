@@ -17,6 +17,8 @@ const Landing = (props) => (
           <div className="intro-heading">But in your underwear</div>
           <p className="auth">For Auth Enter Username:</p>
           <Auth className="auth"/>
+          <video id="video"></video>
+          <canvas id="canvas"></canvas>
           <p className="landing-drop-text landing-circle">
             Drop Your Video File Here
             <input type="file" id="files" className="landing-circle drop-box" name="file" onChange={props.setFile} />
