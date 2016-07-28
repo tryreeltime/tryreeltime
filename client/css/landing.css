@@ -244,6 +244,22 @@ header {
   text-align: center;
   color: white;
 }
+
+header .auth {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: yellow;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 25px;
+  margin-bottom: 50px;
+}
+
+header .authText{
+  color: black;
+  
+}
+
 header .intro-text {
   padding-top: 100px;
   padding-bottom: 50px;
@@ -284,6 +300,7 @@ header .intro-text .intro-heading {
     margin-bottom: 50px;
   }
 }
+
 section {
   padding: 100px 0;
 }
@@ -786,4 +803,3 @@ body {
   position: absolute;
   margin-top: -80vh;
 }
-
