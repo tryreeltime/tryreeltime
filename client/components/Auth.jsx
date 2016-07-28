@@ -21,7 +21,7 @@ class Auth extends React.Component {
   handleSubmit() {
     this.setState({username: this.state.textinput});
     this.setState({showCamera: true});
-    startup();
+    startup(this.state.username); // passing down to doAuth in /captureStills
   }
 
   // TODO: style button

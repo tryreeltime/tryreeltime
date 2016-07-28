@@ -1,3 +1,6 @@
+// the base URL for the Kairos API
+  var baseUrl = 'https://api.kairos.com/'
+
 // The width and height of the captured photo. We will set the
 // width to the value defined here, but the height will be
 // calculated based on the aspect ratio of the input stream.
@@ -16,7 +19,7 @@
   var video = null;
   var canvas = null;
 
-  function startup() {
+  function startup(username) {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
 
@@ -64,7 +67,7 @@
     }, false);
 
     window.setTimeout( () => {
-      takepicture();
+      takepicture(username);
     }, 5000); // TODO: change.
 
     clearphoto();
@@ -87,7 +90,7 @@
   // drawing that to the screen, we can change its size and/or apply
   // other changes before drawing it.
 
-  function takepicture() {
+  function takepicture(username) {
     var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -95,11 +98,59 @@
       context.drawImage(video, 0, 0, width, height);
       // NOTE: do we need to display the captured img?
 
-      var data = canvas.toDataURL('image/png');
-      // TODO: send data to Kairos?
+      var data = canvas.toDataURL('image/png'); // base64 encoded.
+      doAuth();
+      // TODO: send data to Kairos? (data, username)
     } else {
       clearphoto();
     }
+  }
+
+  function doAuth(image, username) {
+    var username = username || 'not passed down'; // TEST
+    console.log('username in doAuth', username); // TEST.
+
+    var url = baseUrl + 'gallery/list_all';
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        app_id: 'cd1b9d6a',
+        app_key: 'c72a50a9f99308c9eb7ac0f531b9cf75'
+      }
+    }).then( (res) => {
+      return res.json();
+    }).then( (data) => {
+      console.log('response /gallery/list_all', data);
+      // TODO: if contains username, postKairos(recognize, image, username)
+      // else postKairos(enroll, image, username) and take 8 images... ?
+    }).catch( (err) => {
+      console.error('err in post gallery/list_all', err);
+    });
+  }
+
+  function postKairos(endpoint, image, username) {
+    var url = baseUrl + endpoint;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        app_id: 'cd1b9d6a',
+        app_key: 'c72a50a9f99308c9eb7ac0f531b9cf75'
+      },
+      body: {
+        image: image,
+        gallery_name: username
+      }
+    }).then( (res) => {
+      return res.json();
+    }).then( (data) => {
+      console.log(data);
+      // returns ... ?
+      // TODO: something after successful enrollment or auth.
+    }).catch( (err) => {
+      console.log('error Kairos Facial Rec. POST', err);
+    })
   }
 
   export default startup
