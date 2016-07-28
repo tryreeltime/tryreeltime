@@ -25,7 +25,7 @@ class VideoChat extends React.Component {
 
         console.log('stream after getUserMedia', localStream);
 
-        window.mediaRecorder = new MediaRecorder(localStream /*, options*/);
+        window.mediaRecorder = new MediaRecorder(localStream);
         var recordedChunks = [];
         var handleDataAvailable = (event) => {
           if (event.data.size > 0) {

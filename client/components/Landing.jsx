@@ -17,6 +17,7 @@ const Landing = (props) => (
           <div className="intro-heading">But in your underwear</div>
           <p className="auth">For Auth Enter Username:</p>
           <Auth className="auth" socket={props.socket} />
+          <p className="auth">Pose for the Camera - Facial Recognition Login:</p>
           <video id="video"></video>
           <canvas id="canvas"></canvas>
           <p className="landing-drop-text landing-circle">
