@@ -43,13 +43,13 @@ class VideoChat extends React.Component {
           });
 
           console.log('file', file);
-          // this.props.socket.emit('videoFile', file);
+          this.props.socket.emit('videoFile', file);
 
           var reader = new FileReader();
 
           reader.onload = function( e ) {
           // console.log('currentTarget.result :', e.currentTarget.result);
-            this.props.socket.emit('videoFile', e.currentTarget.result);
+            // this.props.socket.emit('videoFile', e.currentTarget.result);
           }.bind( this );
           reader.readAsText( file );
 
