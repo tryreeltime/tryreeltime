@@ -99,17 +99,17 @@
       // NOTE: do we need to display the captured img?
 
       var data = canvas.toDataURL('image/png'); // base64 encoded.
-      doAuth();
-      // TODO: send data to Kairos? (data, username)
+      console.log('takepicture!');
+
+      // TODO: somewhere either here or in doAuth we need to send the image `data` to AWS S3 and return the URL for sending to Kairos. 
+
+      doAuth(data, username);
     } else {
       clearphoto();
     }
   }
 
   function doAuth(image, username) {
-    var username = username || 'not passed down'; // TEST
-    console.log('username in doAuth', username); // TEST.
-
     var url = baseUrl + 'gallery/list_all';
 
     fetch(url, {
@@ -122,14 +122,37 @@
       return res.json();
     }).then( (data) => {
       console.log('response /gallery/list_all', data);
-      // TODO: if contains username, postKairos(recognize, image, username)
-      // else postKairos(enroll, image, username) and take 8 images... ?
+      // TODO: change based on response format.
+      if (data.gallery_ids.indexOf(username) > 0) {
+        postKairos('recognize', image, username);
+      } else {
+        postKairos('enroll', image, username);
+        // TODO: enroll more images for new user
+      }
     }).catch( (err) => {
       console.error('err in post gallery/list_all', err);
     });
   }
 
   function postKairos(endpoint, image, username) {
+    console.log('firing of a request to', endpoint, 'for user', username);
+
+    // test with valid URL... => 5002 no faces found
+    // image = 'https://s3-us-west-1.amazonaws.com/labitapp/dog1.jpeg';
+
+    // test with a person img - WORKS!
+    image = 'http://www.rodamarketing.com/wp-content/uploads/2014/07/Smiling-Man.jpg';
+
+    var body = {
+      image: image,
+      subject_id: username,
+      "minHeadScale":".125",
+      "multiple_faces":"false",
+      'selector': 'EYES', // experiment?
+      'symmetricFill': 'true',
+      gallery_name: username
+    };
+
     var url = baseUrl + endpoint;
     fetch(url, {
       method: 'POST',
@@ -138,15 +161,11 @@
         app_id: 'cd1b9d6a',
         app_key: 'c72a50a9f99308c9eb7ac0f531b9cf75'
       },
-      body: {
-        image: image,
-        gallery_name: username
-      }
+      body: JSON.stringify(body)
     }).then( (res) => {
       return res.json();
     }).then( (data) => {
-      console.log(data);
-      // returns ... ?
+      console.log('response on postKairos', endpoint, 'with', data);
       // TODO: something after successful enrollment or auth.
     }).catch( (err) => {
       console.log('error Kairos Facial Rec. POST', err);

@@ -6,9 +6,7 @@ class Auth extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      textinput: '',
-      username: '',
-      showCamera: false
+      textinput: ''
     }
   }
 
@@ -17,11 +15,9 @@ class Auth extends React.Component {
     this.setState({textinput: e.target.value});
   }
 
-  // set username state for use in auth
+  // start captureStills and Kairos fetch methods.
   handleSubmit() {
-    this.setState({username: this.state.textinput});
-    this.setState({showCamera: true});
-    startup(this.state.username); // passing down to doAuth in /captureStills
+    startup(this.state.textinput); // passing down to doAuth in /captureStills
   }
 
   // TODO: style button
