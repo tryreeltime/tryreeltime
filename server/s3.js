@@ -9,20 +9,21 @@ AWS.config.update({region:'us-west-2'});
 
 
 
-const postTheVideo = (file) => {
+const postTheVideo = (blob) => {
   console.log('you made it to your s3call')
  s3.createBucket({Bucket: process.env.bucket}, function() {
  	//THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
   var params = {
   	Bucket: process.env.bucket,
     Key: 'I uploaded a file!!!',
-    Body: file
+    Body: blob,
+    ContentType: 'video/webm'
   };
 
   s3.putObject(params, function(err, data) {
       if (err)       
           console.log(err)     
-      else       console.log("Successfully uploaded data to myBucket/myKey" + data);   
+      else       console.log("Successfully uploaded data to myBucket" + data);   
    });
 });
 }
