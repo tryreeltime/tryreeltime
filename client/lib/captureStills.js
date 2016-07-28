@@ -1,5 +1,6 @@
 import _ from 'underscore';
 
+
 // the base URL for the Kairos API
   var baseUrl = 'https://api.kairos.com/'
 
@@ -21,7 +22,7 @@ import _ from 'underscore';
   var video = null;
   var canvas = null;
 
-  function startup(username) {
+  function startup(username, socket) { // socket is passed down.
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
 
@@ -109,6 +110,7 @@ import _ from 'underscore';
     }
   }
 
+ // for use in doAuth
   function takemorepictures() {
     var context = canvas.getContext('2d');
     if (width && height) {
@@ -156,6 +158,7 @@ import _ from 'underscore';
   function postKairos(endpoint, image, username) {
     console.log('firing of a request to', endpoint, 'for user', username);
     var body;
+    var url = baseUrl + endpoint;
 
     // test with a person img - WORKS! - NOTE: remove for production
     image = 'http://www.rodamarketing.com/wp-content/uploads/2014/07/Smiling-Man.jpg';
@@ -177,7 +180,6 @@ import _ from 'underscore';
      };
     }
 
-    var url = baseUrl + endpoint;
     fetch(url, {
       method: 'POST',
       headers: {

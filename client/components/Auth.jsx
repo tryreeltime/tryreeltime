@@ -1,6 +1,7 @@
 import React from 'react';
 import startup from './../lib/captureStills.js';
 // className = "auth"
+// this.props.socket
 
 class Auth extends React.Component {
   constructor(props) {
@@ -17,11 +18,8 @@ class Auth extends React.Component {
 
   // start captureStills and Kairos fetch methods.
   handleSubmit() {
-    startup(this.state.textinput); // passing down to doAuth in /captureStills
+    startup(this.state.textinput, this.props.socket); // passing down to doAuth in /captureStills
   }
-
-  // TODO: style button
-  // TODO: style form
 
   render() {
     return(
