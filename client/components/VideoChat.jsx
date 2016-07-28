@@ -15,13 +15,67 @@ class VideoChat extends React.Component {
 
   componentDidMount() {
     const constraints = {
-      audio: true,
+      audio: false, // we don't need audio for our purposes.
       video: true,
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
-      .then(this.setUpVideoStream)
-      .catch(console.error.bind(console));
+      .then( (localStream) => {
+
+        console.log('stream after getUserMedia', localStream);
+
+        window.mediaRecorder = new MediaRecorder(localStream /*, options*/);
+        var recordedChunks = [];
+        var handleDataAvailable = (event) => {
+          if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+          } else {
+            console.log('no stream? error in handleDataAvailable');
+          }
+        };
+        mediaRecorder.ondataavailable = handleDataAvailable;
+        mediaRecorder.onstop = () => {
+          console.log('stop fired');
+
+          var file = new File(recordedChunks, `userid.webm`, {
+            type: 'video/webm'
+          });
+
+          console.log('file', file);
+
+          var reader = new FileReader();
+          var url = 'http://localhost:3000'; // TODO: change.
+
+          reader.onload = function( e ) {
+
+            fetch( url , {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": 'video/webm' // NOTE: video/mp4 ?
+                    },
+                    body: e.currentTarget.result
+                } )
+                // .then( (res) => res.json() )
+                .then( ( data ) => {
+                    console.info( 'Request succeeded with JSON response', data );
+                } )
+                .catch( ( error ) => {
+                    console.error( 'Request failed', error );
+                } );
+
+            }.bind( this );
+
+            reader.readAsText( file );
+        };
+
+        mediaRecorder.start();
+
+        window.setTimeout( () => {
+          mediaRecorder.stop(); // TODO: move this event elsewhere ?
+        }, 5000)
+
+      }).then(this.setUpVideoStream)
+        .catch(console.error.bind(console));
   }
 
   setUpVideoStream(localStream) {
