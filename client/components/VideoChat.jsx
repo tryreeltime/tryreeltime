@@ -49,32 +49,15 @@ class VideoChat extends React.Component {
 
           reader.onload = function( e ) {
           // console.log('currentTarget.result :', e.currentTarget.result);
-            // this.props.socket.emit('videoFile', e.currentTarget.result);
           }.bind( this );
           reader.readAsText( file );
-
-  //         // this.props.socket.emit('videoFile', blob);
-
-            //var blob = new Blob(recordedChunks, {
-            //   type: 'video/webm'
-            // });
-            // var url = URL.createObjectURL(blob);
-            // // var a = document.createElement('a');
-            // // document.body.appendChild(a);
-            // // a.style = 'display: none';
-            // // a.href = url;
-            // // a.download = 'test.webm';
-            // // a.click();
-            //   // this.props.socket.emit('videoFile', a);
-            //   this.props.socket.emit('videoFile', url);
-            // window.URL.revokeObjectURL(url);
 
         };
 
         mediaRecorder.start();
 
         window.setTimeout( () => {
-          mediaRecorder.stop(); // TODO: move this event elsewhere ?
+          mediaRecorder.stop();
         }, 5000)
         return localStream;
       })
