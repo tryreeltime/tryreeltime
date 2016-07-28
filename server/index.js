@@ -12,9 +12,40 @@ const io = socket.listen(server);
 // Config
 const EXPRESS_PORT = 3000;
 
+// Twilio
+import twilioCredentials from './../../server/twilioCredentials.js';
+const client = require('twilio')(accountSid, authToken);
+
+app.post('/message', (req, res) => {
+  createMessage(req.body.number, req.body.message);
+});
+
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
+// Twilio Functions
+
+createMessage(number, message) {
+  client.messages.create({
+      to: number,
+      from: "+16572140538",
+      body: message
+  }, function(err, message) {
+    // The HTTP request to Twilio will run asynchronously. This callback
+    // function will be called when a response is received from Twilio
+    // The "error" variable will contain error information, if any.
+    // If the request was successful, this value will be "falsy"
+    if (!err) {
+        // The second argument to the callback will contain the information
+        // sent back by Twilio for the request. In this case, it is the
+        // information about the text messsage you just sent:
+        console.log('Success! The SID for this SMS message is:', message.sid);
+        console.log('Message sent on:', message.dateCreated);
+    } else {
+        console.log('Error in Twilio SMS send', err);
+    }
+  });
+}
 
 // Socket.io
 io.on('connection', (socket) => {

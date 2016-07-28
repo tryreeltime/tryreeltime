@@ -24,12 +24,12 @@ module.exports = {
         query: {
           presets: ['react', "es2015"]
         }
-      }, 
+      },
       {
         test: /aws-sdk/,
         loaders: [
          'transform?aws-sdk/dist-tools/transform'
-        ] 
+        ]
       },
       {
         test: /\.json$/, loaders: ['json']
@@ -43,5 +43,5 @@ module.exports = {
   ],
   // node: {
   //   fs: "empty"
-  // }, 
+  // },
 };

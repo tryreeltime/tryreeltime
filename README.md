@@ -34,6 +34,13 @@ Previous docs: https://docs.google.com/document/d/1K59qsbn6l3HnMAh7S6xlKq4TSJGD3
 - https://github.com/mdn/samples-server/blob/master/s/webrtc-capturestill/
 - https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 
+### Twilio SMS to send the link to friends
+- https://www.twilio.com/blog/2013/03/introducing-the-twilio-module-for-node-js.html
+- http://twilio.github.io/twilio-node/
+
+### React Copy to clipboard
+- https://www.npmjs.com/package/react-copy-to-clipboard
+
 ## Attempted, Deferred:
 
 We attempted work on MP4Box...
