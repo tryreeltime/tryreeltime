@@ -24,44 +24,55 @@ class VideoChat extends React.Component {
 
         console.log('stream after getUserMedia', localStream);
 
-        window.mediaRecorder = new MediaRecorder(localStream);
+        window.mediaRecorder = new MediaRecorder(localStream /*, options*/);
         var recordedChunks = [];
         var handleDataAvailable = (event) => {
           if (event.data.size > 0) {
             recordedChunks.push(event.data);
-            downloadRecording();
           } else {
             console.log('no stream? error in handleDataAvailable');
           }
-        }
-        var downloadRecording = () => {
-          var blob = new Blob(recordedChunks, {
+        };
+        mediaRecorder.ondataavailable = handleDataAvailable;
+        mediaRecorder.onstop = () => {
+          console.log('stop fired');
+
+          var file = new File(recordedChunks, `userid.webm`, {
             type: 'video/webm'
           });
-          var url = URL.createObjectURL(blob);
 
-          // TODO: add fetch() POST here.
-          // TODO: remove the auto local fileDownload.
+          console.log('file', file);
 
-          var a = document.createElement('a');
-          document.body.appendChild(a);
-          a.style = 'display: none';
-          a.href = url;
-          a.download = 'test.webm';
-          a.click();
+          var reader = new FileReader();
+          var url = 'http://localhost:3000'; // TODO: change.
 
-          // TODO: move revokeObjectURL to .then() on fetch().
+          reader.onload = function( e ) {
 
-          window.URL.revokeObjectURL(url);
-        }
+            fetch( url , {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": 'video/webm' // NOTE: video/mp4 ?
+                    },
+                    body: e.currentTarget.result
+                } )
+                // .then( (res) => res.json() )
+                .then( ( data ) => {
+                    console.info( 'Request succeeded with JSON response', data );
+                } )
+                .catch( ( error ) => {
+                    console.error( 'Request failed', error );
+                } );
 
-        mediaRecorder.ondataavailable = handleDataAvailable;
+            }.bind( this );
+
+            reader.readAsText( file );
+        };
+
         mediaRecorder.start();
 
         window.setTimeout( () => {
-          console.log('reg setTimeout function invocation');
-          mediaRecorder.stop(); // TODO: extract the stop() to the moment we actually want to stop the recording.
-        }, 5000);
+          mediaRecorder.stop(); // TODO: move this event elsewhere ?
+        }, 5000)
 
       }).then(this.setUpVideoStream)
         .catch(console.error.bind(console));
