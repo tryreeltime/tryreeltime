@@ -28,7 +28,7 @@ class App extends React.Component {
       showLink: isSource,
       showBody: !isSource,
     };
-
+ 
 
     // //////////////////////////////////////////////////////////////////////////////
     if (this.state.isSource) {
