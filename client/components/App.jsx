@@ -5,7 +5,7 @@ import Link from './Link';
 import Video from "./Video.jsx";
 import ChatSpace from "./ChatSpace.jsx";
 
-import { getMyId, establishPeerConnection } from '../lib/webrtc';
+import { getMyId, getPeer } from '../lib/webrtc';
 import readFile from '../lib/fileReader';
 import appendChunk from '../lib/mediaSource';
 
@@ -13,9 +13,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.setFile = this.setFile.bind(this);
+    this.connections = [];
 
     const params = new URLSearchParams(location.search.slice(1));
     const isSource = !params.has('id');
+    const peer = getPeer();
 
     this.state = {
       isSource,
@@ -26,6 +28,60 @@ class App extends React.Component {
       showLink: isSource,
       showBody: !isSource,
     };
+ 
+
+    // //////////////////////////////////////////////////////////////////////////////
+    if (this.state.isSource) {
+      //
+      peer.on('connection', (conn) => {
+
+        conn.on('open', () => {
+          console.log('RTC data connection established - acting as source');
+
+          // hide link
+          this.setState({
+            showLink: false,
+          });
+          
+          // add to connections array
+          this.connections.push(conn);
+          
+          // send video info to all connections
+          const video = document.querySelector('.video');
+          readFile(this.state.file, (chunk) => {
+            appendChunk(chunk, video);
+            // iterate over each connection 
+            this.connections.forEach( (conn) => { 
+              conn.send(chunk);
+            });
+          })
+        });
+      });
+    // if not source...
+    } else {
+      // need sourceId!
+      const conni = peer.connect(this.state.peerId, { reliable: true });
+
+      conni.on('open', () => {
+        console.log('RTC data connection established - acting as receiver');
+      });
+
+      conni.on('data', (data) => {
+        //still need to send anything?
+        if (typeof data === 'string') {
+          console.log(data);
+        } else {
+          // Append each received ArrayBuffer to the local MediaSource
+          const video = document.querySelector('.video');          
+          appendChunk(data, video);
+        }
+      })
+
+      conni.on('error', (error) => {
+        console.error(error);
+      })
+    }
+    ////////////////////////////////////////////////////////////////////////////////
   }
 
   componentDidMount() {
@@ -52,40 +108,40 @@ class App extends React.Component {
       });
     });
 
-    establishPeerConnection().then((conn) => {
-      // Now connected to receiver as source
+    // establishPeerConnection().then((conn) => {
+    //   // Now connected to receiver as source
 
-      // Remove the link display
-      this.setState({
-        showLink: false,
-      });
+    //   // Remove the link display
+    //   this.setState({
+    //     showLink: false,
+    //   });
 
-      // Read in the file from disk.
-      // For each chunk, append it to the local MediaSource and send it to the other peer
-      const video = document.querySelector('.video');
-      readFile(this.state.file, (chunk) => {
-        appendChunk(chunk, video);
-        conn.send(chunk);
-      });
-    })
-    .catch(console.error.bind(console));
+    //   // Read in the file from disk.
+    //   // For each chunk, append it to the local MediaSource and send it to the other peer
+    //   const video = document.querySelector('.video');
+    //   readFile(this.state.file, (chunk) => {
+    //     appendChunk(chunk, video);
+    //     conn.send(chunk);
+    //   });
+    // })
+    // .catch(console.error.bind(console));
   }
 
   initAsReceiver(peerId) {
-    establishPeerConnection(peerId).then((conn) => {
-      // Now connected to source as receiver
+    // establishPeerConnection(peerId).then((conn) => {
+    //   // Now connected to source as receiver
 
-      // Listen for incoming video data from source
-      conn.on('data', (data) => {
-        if (typeof data === 'string') {
-          console.log(data);
-        } else {
-          // Append each received ArrayBuffer to the local MediaSource
-          const video = document.querySelector('.video');          
-          appendChunk(data, video);
-        }
-      });
-    });
+    //   // Listen for incoming video data from source
+    //   conn.on('data', (data) => {
+    //     if (typeof data === 'string') {
+    //       console.log(data);
+    //     } else {
+    //       // Append each received ArrayBuffer to the local MediaSource
+    //       const video = document.querySelector('.video');          
+    //       appendChunk(data, video);
+    //     }
+    //   });
+    // });
   }
 
   render() {
