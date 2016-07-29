@@ -57,4 +57,4 @@ io.on('connection', (socket) => {
 
 
 server.listen(process.env.PORT || EXPRESS_PORT);
-console.log(`Listening on port ${EXPRESS_PORT}`);
+console.log(`Listening on port ${process.env.PORT || EXPRESS_PORT}`);
