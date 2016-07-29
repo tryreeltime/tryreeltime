@@ -2,6 +2,10 @@ import Peer from 'peerjs';
 
 const peer = new Peer({ key: 'dyf2h2fyul2nvcxr' });
 
+const getPeer = () => {
+  return peer;
+};
+
 // Returns a Promise that is resolved with this peer's ID, assigned by the signaling server.
 const getMyId = () => new Promise((resolve, reject) => {
   if (!peer.id) {
@@ -93,6 +97,7 @@ const establishPeerCall = (mediaStream, sourceId) => new Promise((resolve, rejec
 });
 
 export {
+  getPeer,
   getMyId,
   establishPeerConnection,
   establishPeerCall,
