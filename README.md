@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/cpruijsen/tryreeltime.svg?branch=master)](https://travis-ci.org/cpruijsen/tryreeltime) [![Code Climate](https://codeclimate.com/repos/579b9ee4419e043ce200148b/badges/5e84f2d2c8edddb40cfc/gpa.svg)](https://codeclimate.com/repos/579b9ee4419e043ce200148b/feed) [![bitHound Overall Score](https://www.bithound.io/github/cpruijsen/tryreeltime/badges/score.svg)](https://www.bithound.io/github/cpruijsen/tryreeltime) [![bitHound Dependencies](https://www.bithound.io/github/cpruijsen/tryreeltime/badges/dependencies.svg)](https://www.bithound.io/github/cpruijsen/tryreeltime/master/dependencies/npm) [![bitHound Code](https://www.bithound.io/github/cpruijsen/tryreeltime/badges/code.svg)](https://www.bithound.io/github/cpruijsen/tryreeltime)
 
-NOTE: CodeClimate / BitHound issues in large part covers duplicate functions and issues in npm modules and components/js which was not written by our team.
-
 NOTE: bithound dependency issues are being looked into, seems largely related to PeerJS, Twilio and Socket.io
 
 ## Run this app
@@ -59,7 +57,11 @@ We run Travis CI using the latest available Node version (6.2.2 at time of writi
 - Travis: https://travis-ci.org
 - CodeClimate: https://codeclimate.com
 - CodeCov: https://codecov.io
-- BitHound:
+- BitHound: https://www.bithound.io/
+
+Ignoring files:
+- https://docs.codeclimate.com/docs/excluding-files-and-folders
+- http://blog.bithound.io/ignoring-files-and-folders-in-bithound/
 
 ## Attempted, Deferred:
 
