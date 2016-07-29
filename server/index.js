@@ -46,6 +46,11 @@ io.on('connection', (socket) => {
     console.log('Pause command recieved');
     socket.broadcast.emit('pause', time);
   });
+
+  socket.on('newCall', (peerid) => {
+    console.log('New call detected');
+    socket.broadcast.emit('newCall', peerid);
+  });
 });
 
 

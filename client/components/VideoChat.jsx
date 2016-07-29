@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getPeer, establishPeerCall } from '../lib/webrtc';
+import { getPeer, getMyId, establishPeerCall } from '../lib/webrtc';
 
 class VideoChat extends React.Component {
   constructor(props) {
@@ -8,18 +8,37 @@ class VideoChat extends React.Component {
 
     this.state = {
       localStream: null,
+      myId: null
     };
 
+    // Keeps track of all call connections currently on
+    this.chatCalls = [];
+
+    var socket = this.props.socket;
+
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
+    // Listens for calls from other peers
     getPeer().on('call', (call) => {
       call.answer(this.state.localStream);
       console.log('New RTC call works - acting as source');
       this.handleNewCall(call);
+      if (this.props.isSource) {
+        socket.emit('newCall', call.peer);
+      }
+    });
+
+    socket.on('newCall', (peerId) => {
+      peerId === this.state.myId ? null : this.makeNewCall(this.state.localStream, peerId);
     });
 
   }
 
   componentDidMount() {
+
+    getMyId().then((myId) => {
+      this.setState({myId: myId});
+    });
+
     const constraints = {
       audio: true,
       video: true,
@@ -33,7 +52,7 @@ class VideoChat extends React.Component {
   setUpVideoStream(localStream) {
     const localVideo = document.querySelector('.local-video');
     localVideo.srcObject = localStream;
-    this.setState({localStream: localStream});
+    this.setState({localStream: localStream});    
 
     // this.establishNewCall(this.state.localStream, this.props.isSource ? null : this.props.peerId);
     if (!this.props.isSource) {
@@ -42,6 +61,7 @@ class VideoChat extends React.Component {
   }
 
   handleNewCall(call) {
+    this.chatCalls.push(call);
     call.on('stream', (remoteStream) => {
       var newRemoteVid = document.createElement('video');
       newRemoteVid.setAttribute('class', 'remote-video');
