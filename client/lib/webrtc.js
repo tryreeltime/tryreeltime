@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-const peer;
+let peer;
 // get request for PORT
 $.ajax({
   method: 'GET',
