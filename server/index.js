@@ -15,7 +15,7 @@ const EXPRESS_PORT = 3000;
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
-app.use('/peerjs', ExpressPeerServer(server, options));
+app.use('/peerjs', ExpressPeerServer(server, { debug: true }));
 
 // Socket.io
 io.on('connection', (socket) => {
