@@ -161,7 +161,7 @@ class App extends React.Component {
         {this.state.showLanding ? <Landing setFile={this.setFile} /> : null}
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
-          <YtPlayer 
+          <Video socket={this.props.socket} />
           <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} />
         </div> : null}
       </div>
