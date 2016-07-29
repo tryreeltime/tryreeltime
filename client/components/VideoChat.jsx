@@ -33,7 +33,7 @@ class VideoChat extends React.Component {
       }).then ( (data) => {
         console.log('data from fetch kairos emotions', data);
         // this.props.emotionsHandler(data);
-        //render this to the DOM!!!! 
+        //render this to the DOM!!!!
       }).catch( err => {
         console.error('err in kairosAPIfetch', err);
       });
@@ -49,7 +49,7 @@ class VideoChat extends React.Component {
 
   componentDidMount() {
     const constraints = {
-      audio: false, 
+      audio: false,
       video: true
     };
 
@@ -116,6 +116,11 @@ class VideoChat extends React.Component {
 
   /* filter classes:
   ig-willow, ig-earlybird, ig-mayfair, ig-amaro, ig-xpro2, ig-toaster, ig-kelvin, ig-brannan
+
+  TODO: separate remote video filters and local video filters.
+  intended functionality:
+  - you can control your localVideo filter, and the socket emits your filter choice to the connected peers
+  - you receive filter info from connected peers and remoteVideo is filtered with those filters.
   */
 
   changeFilter() {
