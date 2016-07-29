@@ -3,6 +3,7 @@ const express = require('express');
 const socket = require('socket.io');
 const http = require('http');
 const s3 = require('./s3.js');
+const bodyParser = require('body-parser')
 
 // Init
 const app = express();
@@ -13,19 +14,25 @@ const io = socket.listen(server);
 const EXPRESS_PORT = 3000;
 
 // Twilio
-import twilioCredentials from './../../server/twilioCredentials.js';
-const client = require('twilio')(accountSid, authToken);
-
-app.post('/message', (req, res) => {
-  createMessage(req.body.number, req.body.message);
-});
+const twilioCredentials = require('./twilioCredentials.js');
+const client = require('twilio')(twilioCredentials.accountSid, twilioCredentials.authToken);
 
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
-// Twilio Functions
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-createMessage(number, message) {
+// parse application/json
+app.use(bodyParser.json())
+
+app.post('/message', (req, res) => {
+  console.log('post to message, on server', ' || number: ', req.body.number, '|| message: ', req.body.message);
+  createMessage(req.body.number, req.body.message);
+});
+
+// Twilio Functions
+function createMessage(number, message) {
   client.messages.create({
       to: number,
       from: "+16572140538",

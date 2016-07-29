@@ -12,7 +12,7 @@ class TwilioSMS extends React.Component {
     number = '+1' + number;
     let body = {
         number: number,
-        message: this.state.numberInput
+        message: this.props.link
     };
 
     fetch('/message', {
@@ -21,11 +21,15 @@ class TwilioSMS extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then( (res) => { // 404 not found -- need to change URL.
-      console.log(res);
-      // return res.json()
+      /*
+      .then( (res) => { // 500 internal error.
+        console.log(res);
+        return res.json()
+      })
+      */
+
     }).then( (data) => {
-      // console.log('twilio success', data);
+      console.log('twilio success', data);
     }).catch( (err) => {
       console.error('twilio error', err);
     });
