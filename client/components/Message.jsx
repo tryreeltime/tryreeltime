@@ -7,7 +7,8 @@ class Message extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: ''
+      message: '',
+      giphy: false
     }
   }
 
@@ -25,6 +26,7 @@ class Message extends React.Component {
       }).then( (result) => {
         console.log('success Giphy', result);
         that.setState({message: result.data.images.original.webp});
+        that.setState({giphy: true});
       }).catch( (err) => {
         console.error('error GET from Giphy', err);
       });
@@ -37,7 +39,9 @@ class Message extends React.Component {
 
   render() {
     return (
-      <li className={this.props.message.className}>{this.state.message}</li>
+      <li className={this.props.message.className}>
+        { this.state.giphy ? <img src={this.state.message}/> : this.state.message }
+      </li>
     )
   }
 }
