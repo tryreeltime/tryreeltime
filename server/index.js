@@ -59,15 +59,15 @@ io.on('connection', (socket) => {
   socket.on('videoFile', (theVideo) => {
     // console.log('Video File received via socket ');
     var urls =  s3.postTheVideo(theVideo);
-    console.log(urls);
-    socket.emit('videoUrl', urls);
+    console.log('urls on svr side ', urls);
+    socket.emit('videoUrls', urls);
   });
 
-  //   socket.on('photoFile', (thePhoto) => {
-  //   console.log('what makes it into vidSocket',thePhoto);
-  //   console.log('Photo File received via socket');
-  //   var result = s3.postTheVideo(thePhoto);
-  // });
+  socket.on('photoFile', (thePhoto) => {
+    console.log('what makes it into vidSocket ', thePhoto);
+    var photoUrls = s3.postTheVideo(thePhoto);
+    socket.emit('photoUrls', photoUrls);
+  });
 });
 
 

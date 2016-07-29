@@ -13,10 +13,21 @@ class VideoChat extends React.Component {
 
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
 
-    this.props.socket.on('videoUrl',  (data) => {
-      console.log('I emitted my vidURL to the client!!!!!');
-      console.log(data);
+    this.props.socket.on('videoUrls',  (data) => {
+      console.log('I emitted vid urls!!!!!')
+      console.log('videoUrls on client side', data);
       //send stuff to the KAIROS API
+      $.ajax({
+        url: `https://api.kairos.com/media/source=${data.publicUrl}`,
+        type: 'POST',
+        data: data.publicUrl,
+        dataType: 'video/webm',
+        'Content-Type': 'application/json'
+      });
+    });
+
+    this.props.socket.on('photoUrls',  (data) => {
+      console.log('there are photoUrls too!')
     });
   }
 
