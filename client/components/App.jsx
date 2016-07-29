@@ -13,6 +13,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.setFile = this.setFile.bind(this);
+    this.handleShowChat = this.handleShowChat.bind(this);
 
     const params = new URLSearchParams(location.search.slice(1));
     const isSource = !params.has('id');
@@ -25,6 +26,7 @@ class App extends React.Component {
       showLanding: isSource,
       showLink: isSource,
       showBody: !isSource,
+      showChatOnly: false
     };
   }
 
@@ -40,7 +42,8 @@ class App extends React.Component {
     this.setState({
       file: e.target.files[0],
       showLanding: false,
-      showBody: true,
+      showChatOnly: false,
+      showBody: true
     });
   }
 
@@ -88,13 +91,24 @@ class App extends React.Component {
     });
   }
 
+  handleShowChat() { // TODO: change <ChatSpace/> to only chat if no video
+    this.setState({
+      showChatOnly: true,
+      showLanding: false,
+      showBody: false
+    });
+  }
+
   render() {
     return (
       <div>
-        {this.state.showLanding ? <Landing socket={this.props.socket} setFile={this.setFile} /> : null}
+        {this.state.showLanding ? <Landing handleShowChat={this.handleShowChat} socket={this.props.socket} setFile={this.setFile} /> : null}
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
           <Video socket={this.props.socket} />
+          <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} />
+        </div> : null}
+        {this.state.showChatOnly ? <div className="wrapper">
           <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} />
         </div> : null}
       </div>
