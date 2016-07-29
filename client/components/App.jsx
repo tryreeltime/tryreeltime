@@ -24,9 +24,7 @@ class App extends React.Component {
       peerId: params.get('id'),
       showLanding: isSource,
       showLink: isSource,
-      showBody: !isSource,
-      localStreamingEmotions:null,
-      remoteStreamingEmotions:null
+      showBody: !isSource
     };
 
   this.props.socket.on('photoData', data => {

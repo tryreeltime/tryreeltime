@@ -10,6 +10,8 @@ class VideoChat extends React.Component {
 
     this.state = {
       localStream: null,
+      localStreamingEmotions:null,
+      remoteStreamingEmotions:null
     };
 
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
