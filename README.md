@@ -1,5 +1,7 @@
 # ReelTime Documentation
 
+[![Build Status](https://travis-ci.org/cpruijsen/tryreeltime.svg?branch=master)](https://travis-ci.org/cpruijsen/tryreeltime)
+
 ## Run this app
 
 To run this app first `npm install` inside the root directory.
