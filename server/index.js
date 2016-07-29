@@ -19,6 +19,11 @@ app.use(express.static(`${__dirname}/../client`));
 // Peer server
 app.use('/peerjs', peerServer);
 
+app.get('/port', function(req, res) {
+  res.json(process.env.PORT);
+})
+
+
 // Socket.io
 io.on('connection', (socket) => {
   console.log('A user connected with socket id', socket.id);
