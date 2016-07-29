@@ -45,6 +45,13 @@ Previous docs: https://docs.google.com/document/d/1K59qsbn6l3HnMAh7S6xlKq4TSJGD3
 - https://github.com/Giphy/GiphyAPI#translate-endpoint
 - emojify https://github.com/banyan/react-emoji
 
+### Travis CI
+
+We run Travis CI using the latest available Node version (6.2.2 at time of writing). Currently this only lints.
+
+- helpful tutorial: https://github.com/dwyl/learn-travis
+- Travis: https://travis-ci.org
+
 ## Attempted, Deferred:
 
 We attempted work on MP4Box...
