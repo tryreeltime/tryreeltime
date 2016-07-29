@@ -4,6 +4,7 @@ import Landing from './Landing';
 import Link from './Link';
 import Video from "./Video.jsx";
 import ChatSpace from "./ChatSpace.jsx";
+import YtPlayer from './YTPlayer.jsx';
 
 import { getMyId, getPeer } from '../lib/webrtc';
 import readFile from '../lib/fileReader';
@@ -160,7 +161,7 @@ class App extends React.Component {
         {this.state.showLanding ? <Landing setFile={this.setFile} /> : null}
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
-          <Video socket={this.props.socket} />
+          <YtPlayer 
           <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} />
         </div> : null}
       </div>
