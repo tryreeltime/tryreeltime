@@ -4,39 +4,38 @@ class TwilioSMS extends React.Component {
   constructor(props) { // link = http://localhost:3000/?id={props.myId}
     super(props)
     this.state = {
-      numberInput: ''
+      numberInput: '',
+      showError: false,
+      showDone: false
     }
   }
 
-  createMessage(number) { // TODO: validation
+  postMessage(number) {
+    var that = this;
     number = '+1' + number;
     let body = {
         number: number,
         message: this.props.link
     };
-
     fetch('/message', {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json'
       }
-      /*
-      .then( (res) => { // 500 internal error.
-        console.log(res);
-        return res.json()
-      })
-      */
-
+    }).then( (res) => {
+      return res.json()
     }).then( (data) => {
       console.log('twilio success', data);
+      this.setState({showDone: true});
     }).catch( (err) => {
+      // if(err.code === 400)
       console.error('twilio error', err);
     });
   }
 
   handleSubmit() {
-    this.createMessage(this.state.numberInput);
+    this.postMessage(this.state.numberInput);
   }
 
   handleChange(e) {
@@ -45,12 +44,14 @@ class TwilioSMS extends React.Component {
 
   render() {
     return(
-      <div>
+      <div className="authText">
         <input className="authText" type="text"
                onChange={this.handleChange.bind(this)}
                value={this.state.numberInput}></input>
         <button className="authText"
                 onClick={this.handleSubmit.bind(this)}>Submit</button>
+        {this.state.showError ? <div className="authText">Invalid Number</div> : null}
+        {this.state.showDone ? <div className="authText">SMS Sent!</div> : null}
       </div>
     )
   }
