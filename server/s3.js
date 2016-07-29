@@ -34,7 +34,7 @@ const postTheVideo = (videoFile) => {
 
 
   //set public and authenticated urls to return to the client! 
-    var publicUrl = 'https://s3.amazonaws.com/' + params.Bucket + '/' + params.Key;
+    var publicUrl = 'https://s3-us-west-1.amazonaws.com/' + params.Bucket + '/' + params.Key;
     var presignedUrl = s3.getSignedUrl('putObject', params);
 
     //send them off
@@ -42,7 +42,7 @@ const postTheVideo = (videoFile) => {
 };
 
 /////////////////////////
-///////VIDEO POST////////
+///////PHOTO POST////////
 /////////////////////////
 
 // const postThePhoto = (photo) => {
