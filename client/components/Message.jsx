@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactEmoji from 'react-emoji';
 
 const Message = (props) => (
-  <li className={props.message.className}>{props.message.text}</li>
+  <li className={props.message.className}>{ReactEmoji.emojify(props.message.text)}</li>
 );
 
 Message.propTypes = {
