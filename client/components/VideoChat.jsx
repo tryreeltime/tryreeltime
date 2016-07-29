@@ -9,6 +9,10 @@ class VideoChat extends React.Component {
 
     this.state = {
       localStream: null,
+      filterArray: ['ig-willow', 'ig-earlybird', 'ig-mayfair', 'ig-amaro', 'ig-xpro2', 'ig-toaster', 'ig-kelvin', 'ig-brannan'],
+      filtercounter: 0,
+      remoteVideoClassName: "remote-video",
+      localVideoClassName: "local-video"
     };
 
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
@@ -103,11 +107,23 @@ class VideoChat extends React.Component {
       .catch(console.error.bind(console));
   }
 
+  /* filter classes:
+  ig-willow, ig-earlybird, ig-mayfair, ig-amaro, ig-xpro2, ig-toaster, ig-kelvin, ig-brannan
+  */
+
+  changeFilter() {
+    if (this.state.filtercounter < this.state.filterArray.length - 1) {
+      this.setState({filtercounter: this.state.filtercounter + 1});
+    } else {
+      this.setState({filtercounter: 0});
+    }
+  }
+
   render() {
     return (
       <div>
-        <video className="local-video" autoPlay></video>
-        <video className="remote-video" autoPlay></video>
+        <video onClick={this.changeFilter.bind(this)} className={`${this.state.localVideoClassName} ${this.state.filterArray[this.state.filtercounter]}`} autoPlay></video>
+        <video onClick={this.changeFilter.bind(this)} className={`${this.state.remoteVideoClassName} ${this.state.filterArray[this.state.filtercounter]}`} autoPlay></video>
       </div>
     );
   }
