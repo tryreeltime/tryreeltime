@@ -1,16 +1,6 @@
 import Peer from 'peerjs';
 
-let peer;
-// get request for PORT
-$.ajax({
-  method: 'GET',
-  url: '/port',
-  success: function(port) {
-    peer = new Peer({ /*key: 'dyf2h2fyul2nvcxr' , */host: 'https://salty-sands-27362.herokuapp.com', path: '/peerjs', port: port });
-  }
-})
-
-
+const peer = new Peer({ /*key: 'dyf2h2fyul2nvcxr' , */host: 'https://salty-sands-27362.herokuapp.com', path: '/peerjs', port: 7105 });
 
 const getPeer = () => {
   return peer;

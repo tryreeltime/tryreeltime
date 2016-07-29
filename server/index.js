@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const ExpressPeerServer = require('peer').ExpressPeerServer;
 const io = socket.listen(server);
-const peerServer = ExpressPeerServer(server, { debug: true, port: 7105, path: '/peerjs'});
+const peerServer = ExpressPeerServer(server, { debug: true, port: process.env.PORT , path: '/peerjs'});
 
 // Config
 const EXPRESS_PORT = 3000;
@@ -17,7 +17,7 @@ const EXPRESS_PORT = 3000;
 app.use(express.static(`${__dirname}/../client`));
 
 // Peer server
-app.use('/peerjs', peerServer);
+app.use('/peerjs/id', peerServer);
 
 app.get('/port', function(req, res) {
   res.json(process.env.PORT);
