@@ -3,6 +3,7 @@ const express = require('express');
 const socket = require('socket.io');
 const http = require('http');
 const s3 = require('./s3.js');
+const bodyParser = require('body-parser')
 
 // Init
 const app = express();
@@ -12,16 +13,46 @@ const io = socket.listen(server);
 // Config
 const EXPRESS_PORT = 3000;
 
+// Twilio
+const twilioCredentials = require('./twilioCredentials.js');
+const client = require('twilio')(twilioCredentials.accountSid, twilioCredentials.authToken);
+
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
-// app.post('/videos', function (req, res){
-// console.log('posted to videos')
-// });
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-// app.post('/photos', function (req, res){
+// parse application/json
+app.use(bodyParser.json())
 
-// });
+app.post('/message', (req, res) => {
+  console.log('post to message, on server', ' || number: ', req.body.number, '|| message: ', req.body.message);
+  createMessage(req.body.number, req.body.message);
+});
+
+// Twilio Functions
+function createMessage(number, message) {
+  client.messages.create({
+      to: number,
+      from: "+16572140538",
+      body: message
+  }, function(err, message) {
+    // The HTTP request to Twilio will run asynchronously. This callback
+    // function will be called when a response is received from Twilio
+    // The "error" variable will contain error information, if any.
+    // If the request was successful, this value will be "falsy"
+    if (!err) {
+        // The second argument to the callback will contain the information
+        // sent back by Twilio for the request. In this case, it is the
+        // information about the text messsage you just sent:
+        console.log('Success! The SID for this SMS message is:', message.sid);
+        console.log('Message sent on:', message.dateCreated);
+    } else {
+        console.log('Error in Twilio SMS send', err);
+    }
+  });
+}
 
 // Socket.io
 io.on('connection', (socket) => {
