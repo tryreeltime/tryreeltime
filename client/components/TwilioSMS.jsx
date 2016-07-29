@@ -5,7 +5,6 @@ class TwilioSMS extends React.Component {
     super(props)
     this.state = {
       numberInput: '',
-      showError: false,
       showDone: false
     }
   }
@@ -23,13 +22,9 @@ class TwilioSMS extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then( (res) => {
-      return res.json()
-    }).then( (data) => {
-      console.log('twilio success', data);
-      this.setState({showDone: true});
+    }).then( () => {
+      that.setState({showDone: true});
     }).catch( (err) => {
-      // if(err.code === 400)
       console.error('twilio error', err);
     });
   }
@@ -50,7 +45,6 @@ class TwilioSMS extends React.Component {
                value={this.state.numberInput}></input>
         <button className="authText"
                 onClick={this.handleSubmit.bind(this)}>Submit</button>
-        {this.state.showError ? <div className="authText">Invalid Number</div> : null}
         {this.state.showDone ? <div className="authText">SMS Sent!</div> : null}
       </div>
     )

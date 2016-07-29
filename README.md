@@ -41,6 +41,10 @@ Previous docs: https://docs.google.com/document/d/1K59qsbn6l3HnMAh7S6xlKq4TSJGD3
 ### React Copy to clipboard
 - https://www.npmjs.com/package/react-copy-to-clipboard
 
+### Giphy API
+- https://github.com/Giphy/GiphyAPI#translate-endpoint
+- emojify https://github.com/banyan/react-emoji
+
 ## Attempted, Deferred:
 
 We attempted work on MP4Box...
