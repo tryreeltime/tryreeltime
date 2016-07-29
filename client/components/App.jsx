@@ -25,7 +25,20 @@ class App extends React.Component {
       showLanding: isSource,
       showLink: isSource,
       showBody: !isSource,
+      localStreamingEmotions:null,
+      remoteStreamingEmotions:null
     };
+
+  this.props.socket.on('photoData', data => {
+    console.log("base app has received photo confirmation");
+  });
+
+  this.props.socket.on('KairosVideoData', data => {
+    console.log("base app has received KairosVideoData data");
+    console.log('appEmotions data', data);
+    //at this point instantiate a new model, passing it KairosVideoData as props;
+  });
+
   }
 
   componentDidMount() {
