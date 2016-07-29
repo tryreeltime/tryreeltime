@@ -24,11 +24,11 @@ class VideoChat extends React.Component {
       //     'app_key': `${process.env.kairos_app_key}`,
       //     'Content-Type': 'application/json'
       //   },
-      //   url: `https://api.kairos.com/media/source=${data.publicUrl}`,
+      //   url: `https://api.kairos.com/media?source=${data.publicUrl}`,
       //   type: 'POST',
       //   data: data.publicUrl    
       // });
-      fetch(`https://api.kairos.com/media/source=${data.publicUrl}`, {
+      fetch(`https://api.kairos.com/media?source=${data.publicUrl}`, {
         method: 'POST',
         headers: {
           app_id: '52efd677',
@@ -41,6 +41,7 @@ class VideoChat extends React.Component {
       }).then ( (data) => {
         console.log('data from fetch kairos emotions', data);
         // something.
+        //render this to the DOM!!!! 
       }).catch( err => {
         console.error('err in post gallery/list_all', err);
       });
