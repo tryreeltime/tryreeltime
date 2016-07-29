@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
 
 server.on('connection', function(id) {
   /* ........... */
-  console.log('id is: ', id)
+  console.log('connection detected');
 })
 
 server.listen(process.env.PORT || EXPRESS_PORT);

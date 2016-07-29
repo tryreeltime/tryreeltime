@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-const peer = new Peer({ key: 'dyf2h2fyul2nvcxr' , host: 'https://salty-sands-27362.herokuapp.com/peerjs' });
+const peer = new Peer({ /*key: 'dyf2h2fyul2nvcxr' , */host: 'https://salty-sands-27362.herokuapp.com', path: '/peerjs' });
 
 const getPeer = () => {
   return peer;
@@ -19,7 +19,7 @@ const getMyId = () => new Promise((resolve, reject) => {
 });
 
 // Returns a Promise that is resolved with an active peer.js DataConnection.
-// If sourceId is specified, this will connect to an existing peer with that source ID.
+// If sourceId is specified, this will connect to an existing ppeer with that source ID.
 // If sourceId is not specified, this will listen for an incoming connection.
 const establishPeerConnection = (sourceId) => new Promise((resolve, reject) => {
   const connect = () => {
