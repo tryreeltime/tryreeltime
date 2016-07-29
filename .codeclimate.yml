@@ -28,5 +28,5 @@ exclude_paths:
   - "**/client/components/js/**"
   - "**/client/lib/adapter.js"
   - "**/client/css/*.js"
-  - "**/client/css/boostrap.css"
+  - "**/client/css/bootstrap.css"
   - "**/node_modules/**"
