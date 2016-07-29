@@ -6,6 +6,7 @@ const http = require('http');
 // Init
 const app = express();
 const server = http.createServer(app);
+const ExpressPeerServer = require('peer').ExpressPeerServer;
 const io = socket.listen(server);
 
 // Config
@@ -14,6 +15,7 @@ const EXPRESS_PORT = 3000;
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
+app.use('/peerjs', ExpressPeerServer(server, options));
 
 // Socket.io
 io.on('connection', (socket) => {
