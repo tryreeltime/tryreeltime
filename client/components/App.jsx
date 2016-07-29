@@ -4,7 +4,6 @@ import Landing from './Landing';
 import Link from './Link';
 import Video from "./Video.jsx";
 import ChatSpace from "./ChatSpace.jsx";
-import YtPlayer from './YTPlayer.jsx';
 
 import { getMyId, getPeer } from '../lib/webrtc';
 import readFile from '../lib/fileReader';
