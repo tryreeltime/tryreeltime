@@ -12,12 +12,18 @@ class VideoChat extends React.Component {
     };
 
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
+
+    this.props.socket.on('videoUrl',  (data) => {
+      console.log('I emitted my vidURL to the client!!!!!');
+      console.log(data);
+      //send stuff to the KAIROS API
+    });
   }
 
   componentDidMount() {
     const constraints = {
-      audio: false, // we don't need audio for our purposes.
-      video: true,
+      audio: false, 
+      video: true
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
