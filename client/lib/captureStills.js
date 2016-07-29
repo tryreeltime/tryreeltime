@@ -69,7 +69,8 @@ import _ from 'underscore';
     }, false);
 
     window.setTimeout( () => {
-      takepicture(username);
+      console.log('setTimeout 4 take picture reached');
+      takepicture(username, socket);
     }, 5000); // TODO: change.
 
     clearphoto();
@@ -92,7 +93,7 @@ import _ from 'underscore';
   // drawing that to the screen, we can change its size and/or apply
   // other changes before drawing it.
 
-  function takepicture(username) {
+  function takepicture(username, socket) {
     var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -102,8 +103,11 @@ import _ from 'underscore';
       console.log('takepicture!');
 
       // TODO: somewhere either here or in doAuth we need to send the image `data` to AWS S3 and return the URL for sending to Kairos.
-      this.props.socket.emit('photoFile', data);
-      doAuth(data, username);
+      socket.emit('photoFile', data);
+      socket.on('photoUrls', function (){
+        console.log('photoUrls on the frontside!')
+        doAuth(data.publicUrl, username);      
+      })
     } else {
       clearphoto();
     }
