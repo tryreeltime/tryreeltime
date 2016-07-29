@@ -2,6 +2,7 @@ import React from 'react';
 
 import { establishPeerCall } from '../lib/webrtc';
 
+require('dotenv').config();
 
 class VideoChat extends React.Component {
   constructor(props) {
@@ -18,22 +19,40 @@ class VideoChat extends React.Component {
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
 
     this.props.socket.on('videoUrls',  (data) => {
-      console.log('videoUrls on client side', data);
+      console.log('videoUrls on client side', data.publicUrl);
       //send stuff to the KAIROS API
-      $.ajax({
-        // headers: {
-
-        // },
-        beforeSend: function (xhr){
-          xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
+      // $.ajax({
+      //   headers: {
+      //     'Access-Control-Allow-Origin': '*',
+      //     'app_id': `${process.env.kairos_app_id}`,
+      //     'app_key': `${process.env.kairos_app_key}`,
+      //     'Content-Type': 'application/json'
+      //   },
+      //   url: `https://api.kairos.com/media?source=${data.publicUrl}`,
+      //   type: 'POST',
+      //   data: data.publicUrl    
+      // });
+      fetch(`https://api.kairos.com/media?source=${data.publicUrl}`, {
+        method: 'POST',
+        headers: {
+          app_id: '52efd677',
+          app_key: 'c168477a480e5ac9a15a290cb7275d71',
+          'Content-Type': 'application/json',
         },
-        url: `https://api.kairos.com/media/source=${data.publicUrl}`,
-        type: 'POST',
-        data: data.publicUrl,
-        dataType: 'jsonp',
-        'Content-Type': 'application/json'
+        mode: 'cors'
+      }).then( res => {
+        return res.json();
+      }).then ( (data) => {
+        console.log('data from fetch kairos emotions', data);
+        // something.
+        //render this to the DOM!!!! 
+      }).catch( err => {
+        console.error('err in post gallery/list_all', err);
       });
     });
+
+
+
 
     this.props.socket.on('photoUrls',  (data) => {
       console.log('there are photoUrls too!')
