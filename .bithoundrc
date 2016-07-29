@@ -3,7 +3,7 @@
     "**/client/components/js/**",
     "**/client/lib/adapter.js",
     "**/client/css/*.js",
-    "**/client/css/boostrap.css",
+    "**/client/css/bootstrap.css",
     "**/deps/**",
     "**/node_modules/**",
     "**/thirdparty/**",
