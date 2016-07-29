@@ -13,12 +13,13 @@ AWS.config.update({region:'us-west-2'});
 
 const postTheVideo = (videoFile) => {
   console.log('Posting videoFile to your AWS s3 bucket');
-  //set the parameters for your video posts
+  //set the parameters for video posts
   var params = {
   	Bucket: process.env.bucket,
-    Key: 'videoFile_kairos',
+    Key: 'videoFile_kairos2.webm',
     Body: videoFile,
-    ContentType: 'video/webm'
+    ContentType: 'video/webm',
+    ACL: 'public-read-write'
   };
 
   //CONNECT WITH THE BUCKET --once things work, experiment to make sure it is necessary
@@ -73,12 +74,10 @@ module.exports.postTheVideo = postTheVideo;
 
 
 
-
+// | authenticated-read | aws-exec-read | bucket-owner-read | bucket-owner-full-control private | public-read | 
 //Content-Type: application/pdf
 //Content-Transfer-Encoding: base64
 // var params = {Bucket: process.env.bucket, Key: 'key'};
 // var url = s3.getSignedUrl('getObject', params);
 //presigned
 // console.log('The URL is', url);
-
-///'https://console.aws.amazon.com/s3/home?region=us-west-2&bucket=labitapp&prefix='

@@ -17,6 +17,12 @@ class VideoChat extends React.Component {
       console.log('videoUrls on client side', data);
       //send stuff to the KAIROS API
       $.ajax({
+        // headers: {
+
+        // },
+        beforeSend: function (xhr){
+          xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
+        },
         url: `https://api.kairos.com/media/source=${data.publicUrl}`,
         type: 'POST',
         data: data.publicUrl,
