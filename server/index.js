@@ -96,7 +96,7 @@ io.on('connection', (socket) => {
 
   socket.on('photoFile', (thePhoto) => {
     console.log('what makes it into vidSocket ', thePhoto);
-    var photoUrls = s3.postTheVideo(thePhoto);
+    var photoUrls = s3.postThePhoto(thePhoto);
     socket.emit('photoUrls', photoUrls);
   });
 });

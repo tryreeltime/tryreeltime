@@ -102,7 +102,7 @@ import _ from 'underscore';
       console.log('takepicture!');
 
       // TODO: somewhere either here or in doAuth we need to send the image `data` to AWS S3 and return the URL for sending to Kairos.
-
+      this.props.socket.emit('photoFile', data);
       doAuth(data, username);
     } else {
       clearphoto();
@@ -117,6 +117,7 @@ import _ from 'underscore';
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png'); // base64 encoded.
+
       return data;
     } else {
       clearphoto();
@@ -125,7 +126,7 @@ import _ from 'underscore';
 
   function doAuth(image, username) {
     var url = baseUrl + 'gallery/list_all';
-
+//the 
     fetch(url, {
       method: 'POST',
       headers: {

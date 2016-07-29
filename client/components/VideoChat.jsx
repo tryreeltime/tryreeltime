@@ -16,18 +16,6 @@ class VideoChat extends React.Component {
 
     this.props.socket.on('videoUrls',  (data) => {
       console.log('videoUrls on client side', data.publicUrl);
-      //send stuff to the KAIROS API
-      // $.ajax({
-      //   headers: {
-      //     'Access-Control-Allow-Origin': '*',
-      //     'app_id': `${process.env.kairos_app_id}`,
-      //     'app_key': `${process.env.kairos_app_key}`,
-      //     'Content-Type': 'application/json'
-      //   },
-      //   url: `https://api.kairos.com/media?source=${data.publicUrl}`,
-      //   type: 'POST',
-      //   data: data.publicUrl    
-      // });
       fetch(`https://api.kairos.com/media?source=${data.publicUrl}`, {
         method: 'POST',
         headers: {
@@ -40,10 +28,10 @@ class VideoChat extends React.Component {
         return res.json();
       }).then ( (data) => {
         console.log('data from fetch kairos emotions', data);
-        // something.
+        // this.props.emotionsHandler(data);
         //render this to the DOM!!!! 
       }).catch( err => {
-        console.error('err in post gallery/list_all', err);
+        console.error('err in kairosAPIfetch', err);
       });
     });
 
