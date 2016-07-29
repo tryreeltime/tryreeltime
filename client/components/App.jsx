@@ -28,7 +28,9 @@ class App extends React.Component {
       showLink: isSource,
       showBody: !isSource,
     };
- 
+
+    this.flag = false;
+    this.chunks = [];
 
     // //////////////////////////////////////////////////////////////////////////////
     if (this.state.isSource) {
@@ -47,14 +49,22 @@ class App extends React.Component {
           this.connections.push(conn);
           
           // send video info to all connections
-          const video = document.querySelector('.video');
-          readFile(this.state.file, (chunk) => {
-            appendChunk(chunk, video);
-            // iterate over each connection 
-            this.connections.forEach( (conn) => { 
+          if (!this.flag) {
+            const video = document.querySelector('.video');
+            this.flag = true;
+            readFile(this.state.file, (chunk) => {
+              appendChunk(chunk, video);
+              this.chunks.push(chunk);
+              // iterate over each connection 
+              this.connections.forEach( (conni) => { 
+                conni.send(chunk);
+              });
+            })
+          } else {
+            this.chunks.forEach((chunk) => {
               conn.send(chunk);
             });
-          })
+          }
         });
       });
     // if not source...
