@@ -71,7 +71,7 @@ import _ from 'underscore';
     window.setTimeout( () => {
       console.log('setTimeout 4 take picture reached');
       takepicture(username, socket);
-    }, 5000); // TODO: change.
+    }, 5000);
 
     clearphoto();
   }
@@ -84,7 +84,6 @@ import _ from 'underscore';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     var data = canvas.toDataURL('image/png');
-    // TODO: send data to Kairos?
   }
 
   // Capture a photo by fetching the current contents of the video
@@ -102,19 +101,18 @@ import _ from 'underscore';
       var data = canvas.toDataURL('image/png'); // base64 encoded.
       console.log('takepicture!');
 
-      // TODO: somewhere either here or in doAuth we need to send the image `data` to AWS S3 and return the URL for sending to Kairos.
       socket.emit('photoFile', data);
-      socket.on('photoUrls', function (){
-        console.log('photoUrls on the frontside!')
-        doAuth(data.publicUrl, username);      
-      })
+      socket.on('photoUrls', (data) => {
+        console.log('photoUrls on the frontside!', data.publicUrl);
+        doAuth(data.publicUrl, username);
+      });
     } else {
       clearphoto();
     }
   }
 
  // for use in doAuth
-  function takemorepictures() {
+  function takemorepictures(query, username) {
     var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -122,7 +120,11 @@ import _ from 'underscore';
       context.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png'); // base64 encoded.
 
-      return data;
+      socket.emit('photoFile', data);
+      socket.on('photoUrls', (data) => {
+        console.log('photoUrls in takemorepictures', data.publicUrl);
+        postKairos(query, data.publicUrl, username);
+      });
     } else {
       clearphoto();
     }
@@ -130,7 +132,7 @@ import _ from 'underscore';
 
   function doAuth(image, username) {
     var url = baseUrl + 'gallery/list_all';
-//the 
+
     fetch(url, {
       method: 'POST',
       headers: {
@@ -150,13 +152,12 @@ import _ from 'underscore';
         // '/recognize' works best with 6-8 images for a person.
         // so we upload several images on '/enroll'
         // TODO: should show user a counter of sorts.
-        // NOTE: timer to ensure the pictures are somewhat different.
+        // timer used to ensure the pictures are somewhat different.
         for (let i = 0; i < 6; i++) {
           window.setTimeout( () => {
-            let image = takemorepictures();
-            postKairos('enroll', image, username);
+            takemorepictures('enroll', username);
           }, 1000);
-        } // NOTE: need to also post those to AWS.
+        }
       }
     }).catch( (err) => {
       console.error('err in post gallery/list_all', err);
@@ -167,9 +168,6 @@ import _ from 'underscore';
     console.log('firing of a request to', endpoint, 'for user', username);
     var body;
     var url = baseUrl + endpoint;
-
-    // test with a person img - WORKS! - NOTE: remove for production
-    image = 'http://www.rodamarketing.com/wp-content/uploads/2014/07/Smiling-Man.jpg';
 
     if (endpoint === 'recognize') {
       body = {
