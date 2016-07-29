@@ -87,23 +87,18 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('pause', time);
   });
 
-///
+// Video & Photo Harvesting events
   socket.on('videoFile', (theVideo) => {
-    console.log('what makes it into vidSocket',theVideo);
-    console.log('Video File received via socket');
-    var result = s3.postTheVideo(theVideo);
-    console.log('is there a result obj?', result);
-    console.log(result.url);
-    //how do i send back data??
+    // console.log('Video File received via socket ');
+    var urls =  s3.postTheVideo(theVideo);
+    console.log('urls on svr side ', urls);
+    socket.emit('videoUrls', urls);
   });
 
-    socket.on('photoFile', (thePhoto) => {
-    console.log('what makes it into vidSocket',thePhoto);
-    console.log('Photo File received via socket');
-    var result = s3.postTheVideo(thePhoto);
-    console.log('is there a result obj?', result);
-    console.log(result.url);
-    //how do i send back data??
+  socket.on('photoFile', (thePhoto) => {
+    console.log('what makes it into vidSocket ', thePhoto);
+    var photoUrls = s3.postTheVideo(thePhoto);
+    socket.emit('photoUrls', photoUrls);
   });
 });
 

@@ -12,12 +12,34 @@ class VideoChat extends React.Component {
     };
 
     this.setUpVideoStream = this.setUpVideoStream.bind(this);
+
+    this.props.socket.on('videoUrls',  (data) => {
+      console.log('videoUrls on client side', data);
+      //send stuff to the KAIROS API
+      $.ajax({
+        // headers: {
+
+        // },
+        beforeSend: function (xhr){
+          xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
+        },
+        url: `https://api.kairos.com/media/source=${data.publicUrl}`,
+        type: 'POST',
+        data: data.publicUrl,
+        dataType: 'jsonp',
+        'Content-Type': 'application/json'
+      });
+    });
+
+    this.props.socket.on('photoUrls',  (data) => {
+      console.log('there are photoUrls too!')
+    });
   }
 
   componentDidMount() {
     const constraints = {
-      audio: false, // we don't need audio for our purposes.
-      video: true,
+      audio: false, 
+      video: true
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
