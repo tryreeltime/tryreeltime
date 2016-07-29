@@ -28,7 +28,12 @@ const postTheVideo = (videoFile) => {
     s3.putObject(params, function(err, data) {
         if (err)       
             console.log(err)     
-        else       console.log("Successfully uploaded data to myBucket");   
+        else {
+          process.env.video_id += 1;
+          console.log('vidId', process.env.video_id);
+          console.log("Successfully uploaded data to myBucket");
+          } 
+
      });
   });
 
@@ -45,30 +50,31 @@ const postTheVideo = (videoFile) => {
 ///////PHOTO POST////////
 /////////////////////////
 
-// const postThePhoto = (photo) => {
-//   console.log('Attempting post of videoFile to s3')
-//  s3.createBucket({Bucket: process.env.bucket}, function() {
-//   //THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
-//   var params = {
-//     Bucket: process.env.bucket,
-//     Key: 'Photo for Kairos',
-//     Body: photo,
-//     ContentType: 'image/jpeg',
-//     'Content-Transfer-Encoding': base64
-//   };
+const postThePhoto = (photo) => {
+  console.log('Attempting post of videoFile to s3')
+ s3.createBucket({Bucket: process.env.bucket}, function() {
+  //THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
+  var params = {
+    Bucket: process.env.bucket,
+    Key: `Photo for Kairos ${process.env.photo_id}`,
+    Body: photo,
+    ContentType: 'image/jpeg',
+    'Content-Transfer-Encoding': base64
+  };
 
-//   s3.putObject(params, function(err, data) {
-//       if (err) {    
-//           console.log(err) 
-//       }    
-//       else {
-//         console.log("Successfully uploaded data to myBucket" + data);
-//         data; 
-//       }
-//   });
+  s3.putObject(params, function(err, data) {
+      if (err) {    
+          console.log(err) 
+      }    
+      else {
+        console.log("Successfully uploaded data to myBucket" + data);
+        process.env.photo_id += 1;
+        return data; 
+      }
+  });
 
-// });
-// };
+});
+};
 
 module.exports.postTheVideo = postTheVideo;
 

@@ -69,6 +69,7 @@ import _ from 'underscore';
     }, false);
 
     window.setTimeout( () => {
+      console.log('setTimeout 4 take picture reached');
       takepicture(username);
     }, 5000); // TODO: change.
 
