@@ -47,7 +47,7 @@ Previous docs: https://docs.google.com/document/d/1K59qsbn6l3HnMAh7S6xlKq4TSJGD3
 
 ### Travis CI
 
-We run Travis CI using the latest available Node version (6.2.2 at time of writing). Currently this only lints.
+We run Travis CI using the latest available Node version (6.2.2 at time of writing). Currently this only lints with JS Hint: http://jshint.com/docs/
 
 - helpful tutorial: https://github.com/dwyl/learn-travis
 - Travis: https://travis-ci.org
