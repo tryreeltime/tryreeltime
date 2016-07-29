@@ -26,7 +26,7 @@ class App extends React.Component {
       showLanding: isSource,
       showLink: isSource,
       showBody: !isSource,
-      showChatOnly: false
+      showChatOnly: false,
       localStreamingEmotions:null,
       remoteStreamingEmotions:null
     };
