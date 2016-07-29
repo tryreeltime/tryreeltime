@@ -15,7 +15,7 @@ const EXPRESS_PORT = 3000;
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
-app.use('/peerjs', ExpressPeerServer(server, { debug: true }));
+app.use('/peerjs', ExpressPeerServer(server, { debug: true, port: 9000, path: '/peerjs'}));
 
 // Socket.io
 io.on('connection', (socket) => {
@@ -55,6 +55,11 @@ io.on('connection', (socket) => {
   });
 });
 
+
+server.on('connection', function(id) {
+  /* ........... */
+  console.log('id is: ', id)
+})
 
 server.listen(process.env.PORT || EXPRESS_PORT);
 console.log(`Listening on port ${EXPRESS_PORT}`);
