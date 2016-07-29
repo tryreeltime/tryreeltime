@@ -57,7 +57,7 @@ const postThePhoto = (photo) => {
     Key: `Photo for Kairos ${process.env.photo_id}`,
     Body: photo,
     ContentType: 'image/jpeg',
-    'Content-Transfer-Encoding': base64
+    ACL: 'public-read-write'
   };
  s3.createBucket({Bucket: process.env.bucket}, function() {
   //THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
