@@ -60,6 +60,13 @@ class App extends React.Component {
     });
   }
 
+  // TODO: separate initAsSource from componentDidMount
+  /* intended:
+      - initAsSource is done only when either a user is authenticated (set myId to username --> the link would be '/${username}') OR when a user drops in a file OR when a user clicks 'chat only'.
+      - NOTE: myId is set in /lib/webrtc.js
+      - add a validator, if a file is present, then readFile etc. otherwise delete the video element from the document. (so we free up the real estate for a larger chat experience) and change the chat styling / className.
+  */
+
   initAsSource() {
     // Act as source: display a link that may be sent to a receiver
     getMyId().then((myId) => {
