@@ -8,6 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const ExpressPeerServer = require('peer').ExpressPeerServer;
 const io = socket.listen(server);
+const peerServer = ExpressPeerServer(server, { debug: true, port: 9000, path: '/peerjs'});
 
 // Config
 const EXPRESS_PORT = 3000;
@@ -15,7 +16,8 @@ const EXPRESS_PORT = 3000;
 // Routes
 app.use(express.static(`${__dirname}/../client`));
 
-app.use('/peerjs', ExpressPeerServer(server, { debug: true, port: 9000, path: '/peerjs'}));
+// Peer server
+app.use('/peerjs', peerServer);
 
 // Socket.io
 io.on('connection', (socket) => {
@@ -56,7 +58,7 @@ io.on('connection', (socket) => {
 });
 
 
-ExpressPeerServer.on('connection', function(id) {
+peerServer.on('connection', function(id) {
   /* ........... */
   console.log('id is: ', id)
   console.log('connection detected');
