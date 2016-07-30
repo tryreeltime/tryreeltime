@@ -96,11 +96,12 @@ class VideoChat extends React.Component {
       .then( (localStream) => {
         console.log('stream after getUserMedia', localStream);
          window.mediaRecorder = new MediaRecorder(localStream);
-         //step 2: setInterval recorddd()
+         // setInterval recorddd()
+         var socket = this.props.socket;
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
-          recorddd(localStream, this.props.socket);
+          // setInterval(console.log('hi'), 10000);
+          setInterval(recorddd(localStream, socket), 10000);
           return localStream;
-         //triple test this to make sure iz workingk!!
       })
       .then(function(whatisEVENHERE){
         //you should remove this function
