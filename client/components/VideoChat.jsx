@@ -32,8 +32,7 @@ class VideoChat extends React.Component {
         return res.json();
       }).then ( (data) => {
         console.log('data from fetch kairos emotions', data);
-        // this.props.emotionsHandler(data);
-        //render this to the DOM!!!!
+        this.props.renderToDom(data);
       }).catch( err => {
         console.error('err in kairosAPIfetch', err);
       });
@@ -81,7 +80,6 @@ class VideoChat extends React.Component {
           var reader = new FileReader();
 
           reader.onload = function( e ) {
-          // console.log('currentTarget.result :', e.currentTarget.result);
           }.bind( this );
           reader.readAsText( file );
 
