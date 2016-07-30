@@ -137,7 +137,7 @@ class VideoChat extends React.Component {
       //THEN TEST THIS!! !! !! !! 
       // recorddd(remoteStream, this.props.socket);
       var newRemoteVid = document.createElement('video');
-      newRemoteVid.setAttribute('class', 'remote-video');
+      newRemoteVid.setAttribute('className', 'remote-video');
       newRemoteVid.setAttribute('autoPlay', 'true');
       document.querySelector('#v-chat').appendChild(newRemoteVid);
       newRemoteVid.srcObject = remoteStream;
@@ -159,7 +159,7 @@ class VideoChat extends React.Component {
       .then((remoteStream) => {
         // const remoteVideo = document.querySelector('.remote-video');
         var newRemoteVid = document.createElement('video');
-        newRemoteVid.setAttribute('class', 'remote-video');
+        newRemoteVid.setAttribute('className', 'remote-video');
         newRemoteVid.setAttribute('autoPlay', 'true');
         document.querySelector('#v-chat').appendChild(newRemoteVid);
         newRemoteVid.srcObject = remoteStream;
