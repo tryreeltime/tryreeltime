@@ -15,7 +15,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.setFile = this.setFile.bind(this);
+    
+    // for broadcasting
     this.connections = [];
+    this.flag = false;
+    this.chunks = [];
+    
     this.handleShowChat = this.handleShowChat.bind(this);
 
     const params = new URLSearchParams(location.search.slice(1));
@@ -41,10 +46,39 @@ class App extends React.Component {
       remoteStreamingEmotions:null
     };
 
-    this.flag = false;
-    this.chunks = [];
+    this.connectToPeers();
 
-    // //////////////////////////////////////////////////////////////////////////////
+    this.props.socket.on('photoData', data => {
+      console.log("base app has received photo confirmation");
+  });
+
+    this.props.socket.on('KairosVideoData', data => {
+      console.log("base app has received KairosVideoData data");
+      console.log('appEmotions data', data);
+      //at this point instantiate a new model, passing it KairosVideoData as props;
+  });
+
+  }
+
+  componentDidMount() {
+    if (this.state.isSource) {
+      this.initAsSource();
+    } else {
+      this.initAsReceiver(this.state.peerId);
+    }
+  }
+
+  setFile(e) {
+    this.setState({
+      file: e.target.files[0],
+      showLanding: false,
+      showChatOnly: false,
+      showBody: true
+    });
+  }
+
+  connectToPeers() {
+    
     if (this.state.isSource) {
       //
       peer.on('connection', (conn) => {
@@ -79,6 +113,7 @@ class App extends React.Component {
           }
         });
       });
+
     // if not source...
     } else {
       // need sourceId!
@@ -103,35 +138,9 @@ class App extends React.Component {
         console.error(error);
       })
     }
-    ////////////////////////////////////////////////////////////////////////////////
-  this.props.socket.on('photoData', data => {
-    console.log("base app has received photo confirmation");
-  });
-
-  this.props.socket.on('KairosVideoData', data => {
-    console.log("base app has received KairosVideoData data");
-    console.log('appEmotions data', data);
-    //at this point instantiate a new model, passing it KairosVideoData as props;
-  });
 
   }
 
-  componentDidMount() {
-    if (this.state.isSource) {
-      this.initAsSource();
-    } else {
-      this.initAsReceiver(this.state.peerId);
-    }
-  }
-
-  setFile(e) {
-    this.setState({
-      file: e.target.files[0],
-      showLanding: false,
-      showChatOnly: false,
-      showBody: true
-    });
-  }
 
   // TODO: separate initAsSource from componentDidMount
   /* intended:
@@ -153,11 +162,6 @@ class App extends React.Component {
     // Junk function :)
   }
 
-  renderToDom (data) {
-    let currentEmotions = calculateEmotions(data);
-    console.log(currentEmotions);
-    this.setState({emotions: currentEmotions});
-  }
   
   handleShowChat() { // TODO: change <ChatSpace/> to only chat if no video
     this.setState({
@@ -167,6 +171,12 @@ class App extends React.Component {
     });
   }
 
+  renderToDom(data) {
+      let currentEmotions = calculateEmotions(data);
+      console.log(currentEmotions);
+      this.setState({emotions: currentEmotions});
+  }
+
   render() {
     return (
       <div>
@@ -174,7 +184,7 @@ class App extends React.Component {
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
           <EmotionsDisplay emotions={this.state.emotions} />
-          <span id ='video'>
+          <span id='video'>
             <Video socket={this.props.socket} />
           </span>
           <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} renderToDom={this.renderToDom.bind(this)}/>
