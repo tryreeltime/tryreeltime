@@ -2,3 +2,13 @@
 
 node_modules/
 
+*.min.js
+
+npm-debug.log
+
+.env
+.eslintrc.js
+
+TwilioCredentials.js
+twilioCredentials.js
+server/twilioCredentials.js

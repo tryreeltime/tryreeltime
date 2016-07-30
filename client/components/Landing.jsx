@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from './Auth.jsx';
 
 const Landing = (props) => (
   <div id="page-top" className="index landing">
@@ -14,6 +15,12 @@ const Landing = (props) => (
         <div className="intro-text">
           <div className="intro-lead-in">Watch TV with your friends</div>
           <div className="intro-heading">But in your underwear</div>
+          <button className="authText" onClick={props.handleShowChat}>Chat Only [no video files]</button>
+          <p className="auth">For Auth Enter Username:</p>
+          <Auth className="auth" socket={props.socket} />
+          <p className="auth">Pose for the Camera - Facial Recognition Login:</p>
+          <video id="video"></video>
+          <canvas id="canvas"></canvas>
           <p className="landing-drop-text landing-circle">
             Drop Your Video File Here
             <input type="file" id="files" className="landing-circle drop-box" name="file" onChange={props.setFile} />
