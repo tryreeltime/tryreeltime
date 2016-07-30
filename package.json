@@ -5,19 +5,18 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "test": "./node_modules/jshint/bin/jshint ./server/index.js",
-    "postinstall": "webpack"
+    "test": "./node_modules/jshint/bin/jshint ./server/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MomentousGeese/ReelTime.git"
+    "url": "git+https://github.com/tryreeltime/tryreeltime.git"
   },
-  "author": "Greg Roche, Robb Marsee, Ryan Hanzawa",
+  "author": "Christopher Pruijsen, Charlie Tran, Jessica Chiou, Hannah Brannan",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/MomentousGeese/ReelTime/issues"
+    "url": "https://github.com/tryreeltime/tryreeltime"
   },
-  "homepage": "https://github.com/MomentousGeese/ReelTime#readme",
+  "homepage": "https://github.com/tryreeltime/tryreeltime#readme",
   "dependencies": {
     "aws-sdk": "^2.4.10",
     "body-parser": "^1.15.2",
