@@ -101,20 +101,15 @@ class VideoChat extends React.Component {
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
 
 
-          setInterval(function(){
-            recorddd(localStream, socket);
-            console.log(localStream);
-            // var localStream = navigator.mediaDevices.getUserMedia(constraints);
-          }, 30000);
+          // setInterval(function(){
+          //   recorddd(localStream, socket);
+          //   console.log(localStream);
+          //   // var localStream = navigator.mediaDevices.getUserMedia(constraints);
+          // }, 30000);
 
 
 
           return localStream;
-      })
-      .then(function(whatisEVENHERE){
-        //you should remove this function
-        // console.log('nutherCheck', whatisEVENHERE);
-        return whatisEVENHERE;
       })
       .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
