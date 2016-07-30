@@ -111,6 +111,10 @@ class VideoChat extends React.Component {
 
           return localStream;
       })
+      .then(function(testStream) {
+        console.log('testing this test stream', testStream);
+        return testStream;
+      })
       .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
   }
