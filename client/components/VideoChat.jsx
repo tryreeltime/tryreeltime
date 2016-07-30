@@ -96,11 +96,15 @@ class VideoChat extends React.Component {
       .then( (localStream) => {
         console.log('stream after getUserMedia', localStream);
          window.mediaRecorder = new MediaRecorder(localStream);
-         // setInterval recorddd()
+         // setInterval recorddd();
          var socket = this.props.socket;
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
           // setInterval(console.log('hi'), 10000);
-          setInterval(recorddd(localStream, socket), 10000);
+          // setInterval(function(localStream){
+
+          //   recorddd(localStream, socket);
+          //   window.mediaRecorder = new MediaRecorder(localStream)
+          // }, 10000);
           return localStream;
       })
       .then(function(whatisEVENHERE){
@@ -179,7 +183,7 @@ class VideoChat extends React.Component {
   render() {
     return (
       <div id="v-chat">
-        <video onClick={this.changeFilter.bind(this)} className={`${this.state.localVideoClassName} ${this.state.filterArray[this.state.filtercounter]}`} autoPlay></video>
+        <video onClick={()=>this.changeFilter.bind(this)} className={`${this.state.localVideoClassName} ${this.state.filterArray[this.state.filtercounter]}`} autoPlay></video>
       </div>
     );
   }
