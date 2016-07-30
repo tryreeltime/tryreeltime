@@ -94,79 +94,80 @@ class VideoChat extends React.Component {
 
 
     //WHEN THE COMPONENT MOUNTS, GET VID RIGHT AWAY! 
-    // navigator.mediaDevices.getUserMedia(constraints)
-    //   .then( (localStream) => {
-    //     console.log('stream after getUserMedia', localStream);
-    //      window.mediaRecorder = new MediaRecorder(localStream);
-    //      // setInterval recorddd();
-    //      var socket = this.props.socket;
-    //      //step 2-3: OR ON BUTTON CLICK -- send to chat?
-
-
-    //       // setInterval(function(){
-    //       //   recorddd(localStream, socket);
-    //       //   console.log(localStream);
-    //       //   // var localStream = navigator.mediaDevices.getUserMedia(constraints);
-    //       // }, 30000);
-
-
-
-    //       return localStream;
-    //   })
-    //   .then(function(testStream) {
-    //     console.log('testing this test stream', testStream);
-    //     return testStream;
-    //   })
-    //   .then(this.setUpVideoStream)
-    //     .catch(console.error.bind(console));
-
     navigator.mediaDevices.getUserMedia(constraints)
-
       .then( (localStream) => {
-
         console.log('stream after getUserMedia', localStream);
+         window.mediaRecorder = new MediaRecorder(localStream);
+         // setInterval recorddd();
+         var socket = this.props.socket;
+         //step 2-3: OR ON BUTTON CLICK -- send to chat?
 
-        window.mediaRecorder = new MediaRecorder(localStream);
-        var recordedChunks = [];
-        var handleDataAvailable = (event) => {
-          if (event.data.size > 0) {
-            recordedChunks.push(event.data);
-          } else {
-            console.log('no stream? error in handleDataAvailable');
-          }
-        };
-        mediaRecorder.ondataavailable = handleDataAvailable;
-        mediaRecorder.onstop = () => {
-          console.log('stop fired');
 
-          var file = new File(recordedChunks, `userid.webm`, {
-            type: 'video/webm'
-          });
+          // setInterval(function(){
+          //   recorddd(localStream, socket);
+          //   console.log(localStream);
+          //   // var localStream = navigator.mediaDevices.getUserMedia(constraints);
+          // }, 30000);
 
-          console.log('file', file);
-          this.props.socket.emit('videoFile', file);
 
-          var reader = new FileReader();
 
-          reader.onload = function( e ) {
-          }.bind( this );
-          reader.readAsText( file );
-
-        };
-
-        mediaRecorder.start();
-
-        window.setTimeout( () => {
-          mediaRecorder.stop();
-        }, 5000)
-        return localStream;
+          return localStream;
       })
-      .then(function(whatisEVENHERE){
-        console.log('nutherCheck', whatisEVENHERE);
-        return whatisEVENHERE;
+      .then(function(testStream) {
+        console.log('testing this test stream', testStream);
+        return testStream;
       })
       .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
+    
+// LAST WORKING CODE
+    // navigator.mediaDevices.getUserMedia(constraints)
+
+    //   .then( (localStream) => {
+
+    //     console.log('stream after getUserMedia', localStream);
+
+    //     window.mediaRecorder = new MediaRecorder(localStream);
+    //     var recordedChunks = [];
+    //     var handleDataAvailable = (event) => {
+    //       if (event.data.size > 0) {
+    //         recordedChunks.push(event.data);
+    //       } else {
+    //         console.log('no stream? error in handleDataAvailable');
+    //       }
+    //     };
+    //     mediaRecorder.ondataavailable = handleDataAvailable;
+    //     mediaRecorder.onstop = () => {
+    //       console.log('stop fired');
+
+    //       var file = new File(recordedChunks, `userid.webm`, {
+    //         type: 'video/webm'
+    //       });
+
+    //       console.log('file', file);
+    //       this.props.socket.emit('videoFile', file);
+
+    //       var reader = new FileReader();
+
+    //       reader.onload = function( e ) {
+    //       }.bind( this );
+    //       reader.readAsText( file );
+
+    //     };
+
+    //     mediaRecorder.start();
+
+    //     window.setTimeout( () => {
+    //       mediaRecorder.stop();
+    //     }, 5000)
+    //     return localStream;
+    //   })
+    //   .then(function(whatisEVENHERE){
+    //     console.log('nutherCheck', whatisEVENHERE);
+    //     return whatisEVENHERE;
+    //   })
+    //   .then(this.setUpVideoStream)
+    //     .catch(console.error.bind(console));
   }
 
   setUpVideoStream(localStream) {
