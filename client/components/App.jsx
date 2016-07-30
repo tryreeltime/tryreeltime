@@ -133,6 +133,10 @@ class App extends React.Component {
     });
   }
 
+  initAsReceiver() {
+    console.log('pooooop')
+  }
+
   renderToDom (data) {
     let currentEmotions = calculateEmotions(data);
     console.log(currentEmotions);
