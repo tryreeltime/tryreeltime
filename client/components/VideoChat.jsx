@@ -3,7 +3,7 @@ import React from 'react';
 import { getPeer, getMyId, establishPeerCall, establishPeerConnection} from '../lib/webrtc';
 import recorddd from '../lib/mediaRecorder';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 class VideoChat extends React.Component {
   constructor(props) {
@@ -113,7 +113,7 @@ class VideoChat extends React.Component {
       })
       .then(function(whatisEVENHERE){
         //you should remove this function
-        console.log('nutherCheck', whatisEVENHERE);
+        // console.log('nutherCheck', whatisEVENHERE);
         return whatisEVENHERE;
       })
       .then(this.setUpVideoStream)
@@ -123,6 +123,7 @@ class VideoChat extends React.Component {
   setUpVideoStream(localStream) {
     const localVideo = document.querySelector('.local-video');
     localVideo.srcObject = localStream;
+    console.log('setUpVideoStream is called');
     this.setState({localStream: localStream});    
 
     // this.establishNewCall(this.state.localStream, this.props.isSource ? null : this.props.peerId);
