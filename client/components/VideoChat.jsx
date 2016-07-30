@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getPeer, getMyId, establishPeerCall } from '../lib/webrtc';
+import { getPeer, getMyId, establishPeerCall, record} from '../lib/webrtc';
 
 require('dotenv').config();
 
@@ -36,6 +36,11 @@ class VideoChat extends React.Component {
       peerId === this.state.myId ? null : this.makeNewCall(this.state.localStream, peerId);
     });
 
+
+//////////////////////////////////////////
+////  listen 4 server-side socket announcement of new s3 videoUrl; post it to Kairos
+//////////////////////////////////////////
+
     this.props.socket.on('videoUrls',  (data) => {
       console.log('videoUrls on client side', data.publicUrl);
       fetch(`https://api.kairos.com/media?source=${data.publicUrl}`, {
@@ -57,12 +62,22 @@ class VideoChat extends React.Component {
     });
 
 
-
+//////////////////////////////////////////
+////  listen 4 server-side socket announcement of new s3 photoUrls as well; Kairos post currently elsewhere
+//////////////////////////////////////////
 
     this.props.socket.on('photoUrls',  (data) => {
       console.log('there are photoUrls too!')
     });
-  }
+
+    this.props.socket.on('buttonClicked',  (data) => {
+      console.log('button event fired!', data);
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then( (localStream) => {
+        console.log('stream after getUserMedia', localStream);
+      });
+    });
+  }  //------------------------------------------------end of constructor
 
   componentDidMount() {
 
@@ -75,45 +90,13 @@ class VideoChat extends React.Component {
       video: true
     };
 
+    //WHEN THE COMPONENT MOUNTS, GET VID RIGHT AWAY! 
     navigator.mediaDevices.getUserMedia(constraints)
       .then( (localStream) => {
-
         console.log('stream after getUserMedia', localStream);
-
-        window.mediaRecorder = new MediaRecorder(localStream);
-        var recordedChunks = [];
-        var handleDataAvailable = (event) => {
-          if (event.data.size > 0) {
-            recordedChunks.push(event.data);
-          } else {
-            console.log('no stream? error in handleDataAvailable');
-          }
-        };
-        mediaRecorder.ondataavailable = handleDataAvailable;
-        mediaRecorder.onstop = () => {
-          console.log('stop fired');
-
-          var file = new File(recordedChunks, `userid.webm`, {
-            type: 'video/webm'
-          });
-
-          console.log('file', file);
-          this.props.socket.emit('videoFile', file);
-
-          var reader = new FileReader();
-
-          reader.onload = function( e ) {
-          }.bind( this );
-          reader.readAsText( file );
-
-        };
-
-        mediaRecorder.start();
-
-        window.setTimeout( () => {
-          mediaRecorder.stop();
-        }, 5000)
-        return localStream;
+         window.mediaRecorder = new MediaRecorder(localStream);
+         record(localStream);
+        // record(function(){return localStream;});
       })
       .then(function(whatisEVENHERE){
         console.log('nutherCheck', whatisEVENHERE);

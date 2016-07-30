@@ -1,10 +1,13 @@
 import React from 'react';
 import _ from 'underscore';
 
+//NEED TO HAND DOWN THE SOCKET!! 
 class EmotionsDisplay extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = {
+
+		}
 	}
 
 	render() {
@@ -21,6 +24,12 @@ class EmotionsDisplay extends React.Component {
 			  		    })}
 			  	    </ul>
 			    </div>
+			  </div>
+			  <div onClick={(e)=>{
+			  	  console.log('Button clicked');
+			  	  this.props.socket.emit('buttonClick', e);
+			  }}>
+				  <button>R they really enjoying this tho?</button>
 			  </div>
 			</nav>
 		)

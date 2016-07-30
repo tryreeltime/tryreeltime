@@ -27,7 +27,7 @@ const postTheVideo = (videoFile) => {
         if (err)       
             console.log(err)     
         else {
-          process.env.video_id += 1;
+          process.env.video_id = Number(process.env.video_id) + 1;
           console.log('vidId', process.env.video_id);
           console.log("Successfully uploaded video to myBucket");
           } 
@@ -58,7 +58,6 @@ const postThePhoto = (photo) => {
     ACL: 'public-read-write'
   };
  s3.createBucket({Bucket: process.env.bucket}, function() {
-  //THE BODY IS WHAT YOUR ARE INPUTTING, the KEY IS THE TITLE!
 
   s3.putObject(params, function(err, data) {
       if (err) {    
@@ -83,11 +82,3 @@ module.exports.postTheVideo = postTheVideo;
 module.exports.postThePhoto = postThePhoto;
 
 
-
-// | authenticated-read | aws-exec-read | bucket-owner-read | bucket-owner-full-control private | public-read | 
-//Content-Type: application/pdf
-//Content-Transfer-Encoding: base64
-// var params = {Bucket: process.env.bucket, Key: 'key'};
-// var url = s3.getSignedUrl('getObject', params);
-//presigned
-// console.log('The URL is', url);
