@@ -6,8 +6,8 @@ const Link = (props) => (
   <div id="link">
     <div id="link-message">
       Send your friend the following link:<br />
-      <span id="link-url">http://salty-sands-27362.herokuapp.com/?id={props.myId} </span>
-      <CopyToClipboard text={`http://salty-sands-27362.herokuapp.com/?id=${props.myId}`}>
+      <span id="link-url">https://salty-sands-27362.herokuapp.com/?id={props.myId} </span>
+      <CopyToClipboard text={`https://salty-sands-27362.herokuapp.com/?id=${props.myId}`}>
         <button>Copy to clipboard</button>
       </CopyToClipboard>
       <p>Share Via SMS:</p>

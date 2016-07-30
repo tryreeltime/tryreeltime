@@ -24,6 +24,7 @@ class VideoChat extends React.Component {
     // Listens for calls from other peers
     getPeer().on('call', (call) => {
       call.answer(this.state.localStream);
+      console.log('handling new call - ', call);
       console.log('New RTC call works - acting as source');
       this.handleNewCall(call);
       if (this.props.isSource) {
@@ -70,10 +71,8 @@ class VideoChat extends React.Component {
     });
 
     this.props.socket.on('buttonClicked',  (data) => {
-      console.log('button event fired!', data);
       navigator.mediaDevices.getUserMedia(constraints)
       .then( (localStream) => {
-        console.log('stream after getUserMedia', localStream);
       });
     });
   }  //------------------------------------------------end of constructor
@@ -92,7 +91,6 @@ class VideoChat extends React.Component {
     //WHEN THE COMPONENT MOUNTS, GET VID RIGHT AWAY!
     navigator.mediaDevices.getUserMedia(constraints)
       .then( (localStream) => {
-        console.log('stream after getUserMedia', localStream);
          var socket = this.props.socket;
          recorddd(localStream, socket);
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
@@ -106,7 +104,6 @@ class VideoChat extends React.Component {
           return localStream;
       })
       .then(function(testStream) {
-        console.log('testing this test stream', testStream);
         return testStream;
       })
       .then(this.setUpVideoStream)
