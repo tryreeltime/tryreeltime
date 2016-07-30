@@ -12,6 +12,10 @@ html, body, #app, .wrapper {
   flex-direction: row;
 }
 
+li {
+  display: block;
+}
+
 .video-container {
   flex: 1;
   display: flex;
