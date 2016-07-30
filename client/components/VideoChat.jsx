@@ -3,7 +3,7 @@ import React from 'react';
 import { getPeer, getMyId, establishPeerCall, establishPeerConnection} from '../lib/webrtc';
 import recorddd from '../lib/mediaRecorder';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 class VideoChat extends React.Component {
   constructor(props) {
