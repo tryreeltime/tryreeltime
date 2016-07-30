@@ -1,9 +1,7 @@
 var AWS = require('aws-sdk'); 
 require('dotenv').config();
   
-// var vids = require('../client/components/VideoChat.jsx');
-
-var s3 = new AWS.S3(); //{apiVersion: '2006-03-01'}
+var s3 = new AWS.S3(); 
 AWS.config.update({accessKeyId: process.env.app_id, secretAccessKey: process.env.app_key});
 AWS.config.update({region:'us-west-2'});
 
@@ -16,14 +14,14 @@ const postTheVideo = (videoFile) => {
   //set the parameters for video posts
   var params = {
   	Bucket: process.env.bucket,
-    Key: 'videoFile_kairos2.webm',
+    Key: `videoFile_kairos${process.env.video_id}.webm`,
     Body: videoFile,
     ContentType: 'video/webm',
     ACL: 'public-read-write'
   };
 
-  //CONNECT WITH THE BUCKET --once things work, experiment to make sure it is necessary
-  s3.createBucket({Bucket: process.env.bucket}, function() {
+
+  // s3.createBucket({Bucket: process.env.bucket}, function() {
     //put an object in the bucket -- change to post if works! 
     s3.putObject(params, function(err, data) {
         if (err)       
@@ -35,7 +33,7 @@ const postTheVideo = (videoFile) => {
           } 
 
      });
-  });
+  // });
 
 
   //set public and authenticated urls to return to the client! 

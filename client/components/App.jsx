@@ -31,10 +31,10 @@ class App extends React.Component {
       showLink: isSource,
       showBody: !isSource,
       emotions: {
-        0: {emotion: 'attention', val: 0},
-        1: {emotion: 'negative', val: 0},
-        2: {emotion: 'smile', val: 50},
-        3: {emotion: 'surprise', val: 50}
+        0: {emotion: 'Attention', val: 0},
+        1: {emotion: 'Negativity', val: 0},
+        2: {emotion: 'Smile', val: 50},
+        3: {emotion: 'Surprise', val: 50}
       },
       showChatOnly: false,
       localStreamingEmotions:null,
@@ -144,13 +144,9 @@ class App extends React.Component {
     // Act as source: display a link that may be sent to a receiver
     getMyId().then((myId) => {
       this.setState({
-        myId,
+        myId: myId
       });
     });
-  }
-
-  initAsReceiver(peerId) {
-    // Junk function :)
   }
 
   renderToDom (data) {

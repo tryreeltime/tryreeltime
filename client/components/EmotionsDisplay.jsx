@@ -9,13 +9,20 @@ class EmotionsDisplay extends React.Component {
 
 	render() {
 		return(
-			<div>
-				<ul>
-					{_.map(this.props.emotions, (emotion, i) => {
-						return <li key={i}>`{emotion.emotion}: {emotion.val}`</li>
-					})}
-				</ul>
-			</div>
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">Emotional Analysis</a>
+			    </div>
+			    <div>
+			  	    <ul>
+			  		    {_.map(this.props.emotions, (emotion, i) => {
+			  		    	return <li key={i}> {emotion.emotion}: {emotion.val} </li>
+			  		    })}
+			  	    </ul>
+			    </div>
+			  </div>
+			</nav>
 		)
 	}
 }

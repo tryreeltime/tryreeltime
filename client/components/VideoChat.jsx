@@ -142,6 +142,10 @@ class VideoChat extends React.Component {
       newRemoteVid.setAttribute('autoPlay', 'true');
       document.querySelector('#v-chat').appendChild(newRemoteVid);
       newRemoteVid.srcObject = remoteStream;
+      return remoteStream;
+    })
+    .then(function(remoteStream){
+      console.log('you have a remote stream!!!!!!!!!');
     });
   }
 
