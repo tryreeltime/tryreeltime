@@ -1,13 +1,39 @@
 import React from 'react';
 import _ from 'underscore';
 
-//NEED TO HAND DOWN THE SOCKET!! 
+/*
+emotions: {
+	0: {emotion: 'Attention', val: 0},
+	1: {emotion: 'Negativity', val: 0},
+	2: {emotion: 'Smile', val: 50},
+	3: {emotion: 'Surprise', val: 50}
+}
+*/
+
+//NEED TO HAND DOWN THE SOCKET!!
 class EmotionsDisplay extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 
 		}
+	}
+
+	showEmoji(emotions) {
+		let sortedEmotions = _.sortBy(emotions, 'val').reverse(); // returns sorted array of objects, val high > low.
+
+		// CUSTOM EMOTION LOGIC GOES HERE.
+
+		if (sortedEmotions[0].emotion === 'Smile') {
+			return <img src={'./../assets/happyEmotion.png'}/>
+		} else if (sortedEmotions[0].emotion === 'Surprise') {
+			return <img src={'./../assets/shockEmotion.png'}/>
+		} else if (sortedEmotions[0].emotion === 'Negativity') {
+			return <img src={'./../assets/angryEmotion.png'}/>
+		} else if (sortedEmotions[0].emotion === 'Attention') {
+			return <img src={'./../assets/attentionEmotion.png'}/>
+		}
+		
 	}
 
 	render() {
@@ -23,6 +49,7 @@ class EmotionsDisplay extends React.Component {
 			  		    	return <li key={i}> {emotion.emotion}: {emotion.val} </li>
 			  		    })}
 			  	    </ul>
+							{this.showEmoji(this.props.emotions)}
 			    </div>
 			  </div>
 			</nav>
