@@ -40,7 +40,7 @@ class Message extends React.Component {
   render() {
     return (
       <li className={this.props.message.className}>
-        { this.state.giphy ? <img src={this.state.message}/> : this.state.message }
+        { this.state.giphy ? <img className="giphy" src={this.state.message}/> : this.state.message }
       </li>
     )
   }
