@@ -121,53 +121,52 @@ class VideoChat extends React.Component {
     //     .catch(console.error.bind(console));
 
     navigator.mediaDevices.getUserMedia(constraints)
+
+      .then( (localStream) => {
+
+        console.log('stream after getUserMedia', localStream);
+
+        window.mediaRecorder = new MediaRecorder(localStream);
+        var recordedChunks = [];
+        var handleDataAvailable = (event) => {
+          if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+          } else {
+            console.log('no stream? error in handleDataAvailable');
+          }
+        };
+        mediaRecorder.ondataavailable = handleDataAvailable;
+        mediaRecorder.onstop = () => {
+          console.log('stop fired');
+
+          var file = new File(recordedChunks, `userid.webm`, {
+            type: 'video/webm'
+          });
+
+          console.log('file', file);
+          this.props.socket.emit('videoFile', file);
+
+          var reader = new FileReader();
+
+          reader.onload = function( e ) {
+          }.bind( this );
+          reader.readAsText( file );
+
+        };
+
+        mediaRecorder.start();
+
+        window.setTimeout( () => {
+          mediaRecorder.stop();
+        }, 5000)
+        return localStream;
+      })
+      .then(function(whatisEVENHERE){
+        console.log('nutherCheck', whatisEVENHERE);
+        return whatisEVENHERE;
+      })
       .then(this.setUpVideoStream)
-      .catch(console.error.bind(console));
-      // .then( (localStream) => {
-
-      //   console.log('stream after getUserMedia', localStream);
-
-      //   window.mediaRecorder = new MediaRecorder(localStream);
-      //   var recordedChunks = [];
-      //   var handleDataAvailable = (event) => {
-      //     if (event.data.size > 0) {
-      //       recordedChunks.push(event.data);
-      //     } else {
-      //       console.log('no stream? error in handleDataAvailable');
-      //     }
-      //   };
-      //   mediaRecorder.ondataavailable = handleDataAvailable;
-      //   mediaRecorder.onstop = () => {
-      //     console.log('stop fired');
-
-      //     var file = new File(recordedChunks, `userid.webm`, {
-      //       type: 'video/webm'
-      //     });
-
-      //     console.log('file', file);
-      //     this.props.socket.emit('videoFile', file);
-
-      //     var reader = new FileReader();
-
-      //     reader.onload = function( e ) {
-      //     }.bind( this );
-      //     reader.readAsText( file );
-
-      //   };
-
-      //   mediaRecorder.start();
-
-      //   window.setTimeout( () => {
-      //     mediaRecorder.stop();
-      //   }, 5000)
-      //   return localStream;
-      // })
-      // .then(function(whatisEVENHERE){
-      //   console.log('nutherCheck', whatisEVENHERE);
-      //   return whatisEVENHERE;
-      // })
-      // .then(this.setUpVideoStream)
-      //   .catch(console.error.bind(console));
+        .catch(console.error.bind(console));
   }
 
   setUpVideoStream(localStream) {
