@@ -3,7 +3,7 @@ const express = require('express');
 const socket = require('socket.io');
 const http = require('http');
 const s3 = require('./s3.js');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 // Init
 const app = express();
@@ -21,14 +21,15 @@ const client = require('twilio')(twilioCredentials.accountSid, twilioCredentials
 app.use(express.static(`${__dirname}/../client`));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.post('/message', (req, res) => {
   console.log('post to message, on server', ' || number: ', req.body.number, '|| message: ', req.body.message);
   createMessage(req.body.number, req.body.message);
+  res.status(201).send();
 });
 
 // Twilio Functions

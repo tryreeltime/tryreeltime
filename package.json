@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/jshint/bin/jshint ./server/index.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "react": "^15.2.1",
     "react-copy-to-clipboard": "^4.2.2",
     "react-dom": "^15.2.1",
+    "react-emoji": "^0.4.4",
     "socket.io": "^1.4.8",
     "tls": "0.0.1",
     "twilio": "^2.9.1",
@@ -48,6 +49,7 @@
     "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
+    "jshint": "^2.9.2",
     "json-loader": "^0.5.4",
     "transform-loader": "^0.2.3",
     "webpack": "^1.13.1"
