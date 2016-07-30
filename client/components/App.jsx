@@ -32,10 +32,10 @@ class App extends React.Component {
       showLink: isSource,
       showBody: !isSource,
       emotions: {
-        0: {emotion: 'Attention', val: 0},
-        1: {emotion: 'Negativity', val: 0},
-        2: {emotion: 'Smile', val: 50},
-        3: {emotion: 'Surprise', val: 50}
+        0: {emotion: 'attention', val: 0},
+        1: {emotion: 'negativity', val: 0},
+        2: {emotion: 'smile', val: 50},
+        3: {emotion: 'surprise', val: 50}
       },
       showChatOnly: false,
       localStreamingEmotions:null,
@@ -57,10 +57,10 @@ class App extends React.Component {
           this.setState({
             showLink: false,
           });
-          
+
           // add to connections array
           this.connections.push(conn);
-          
+
           // send video info to all connections
           if (!this.flag) {
             const video = document.querySelector('.video');
@@ -68,8 +68,8 @@ class App extends React.Component {
             readFile(this.state.file, (chunk) => {
               appendChunk(chunk, video);
               this.chunks.push(chunk);
-              // iterate over each connection 
-              this.connections.forEach( (conni) => { 
+              // iterate over each connection
+              this.connections.forEach( (conni) => {
                 conni.send(chunk);
               });
             })
@@ -95,7 +95,7 @@ class App extends React.Component {
           console.log(data);
         } else {
           // Append each received ArrayBuffer to the local MediaSource
-          const video = document.querySelector('.video');          
+          const video = document.querySelector('.video');
           appendChunk(data, video);
         }
       })
@@ -142,7 +142,7 @@ class App extends React.Component {
     console.log(currentEmotions);
     this.setState({emotions: currentEmotions});
   }
-  
+
   handleShowChat() {
     this.setState({
       showChatOnly: true,

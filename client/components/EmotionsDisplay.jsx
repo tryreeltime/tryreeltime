@@ -1,22 +1,11 @@
 import React from 'react';
 import _ from 'underscore';
 
-/*
-emotions: {
-	0: {emotion: 'Attention', val: 0},
-	1: {emotion: 'Negativity', val: 0},
-	2: {emotion: 'Smile', val: 50},
-	3: {emotion: 'Surprise', val: 50}
-}
-*/
-
 //NEED TO HAND DOWN THE SOCKET!!
 class EmotionsDisplay extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-
-		}
+		this.state = {}
 	}
 
 	showEmoji(emotions) {
@@ -24,14 +13,16 @@ class EmotionsDisplay extends React.Component {
 
 		// CUSTOM EMOTION LOGIC GOES HERE.
 
-		if (sortedEmotions[0].emotion === 'Smile') {
+		if (sortedEmotions[0].emotion === 'smile') {
 			return <img className="emotionEmoji" src={'./../assets/happyEmotion.png'}/>
-		} else if (sortedEmotions[0].emotion === 'Surprise') {
+		} else if (sortedEmotions[0].emotion === 'surprise') {
 			return <img className="emotionEmoji" src={'./../assets/shockEmotion.png'}/>
-		} else if (sortedEmotions[0].emotion === 'Negativity') {
+		} else if (sortedEmotions[0].emotion === 'negativity') {
 			return <img className="emotionEmoji" src={'./../assets/angryEmotion.png'}/>
-		} else if (sortedEmotions[0].emotion === 'Attention') {
+		} else if (sortedEmotions[0].emotion === 'attention') {
 			return <img className="emotionEmoji" src={'./../assets/attentionEmotion.png'}/>
+		} else {
+
 		}
 
 	}

@@ -12,10 +12,10 @@ const calculateEmotions = data => {
 		}
 	});
 	let emotions = {
-		0: {emotion: 'attention', val: aggregateEmotions.attention / framecount},
-		1: {emotion: 'negative', val: aggregateEmotions.negative / framecount},
-		2: {emotion: 'smile', val: aggregateEmotions.smile / framecount},
-		3: {emotion: 'surprise', val: aggregateEmotions.surprise / framecount}
+		0: {emotion: 'attention', val: (aggregateEmotions.attention / framecount).toFixed(2)},
+		1: {emotion: 'negative', val: (aggregateEmotions.negative / framecount).toFixed(2)},
+		2: {emotion: 'smile', val: (aggregateEmotions.smile / framecount).toFixed(2)},
+		3: {emotion: 'surprise', val: (aggregateEmotions.surprise / framecount).toFixed(2)}
 	};
 	return emotions;
 };
