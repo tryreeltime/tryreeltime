@@ -17,7 +17,7 @@ const EXPRESS_PORT = 3000;
 app.use(express.static(`${__dirname}/../client`));
 
 // Peer server
-app.use('/peerjs/id', peerServer);
+app.use('/peerjs/peerjs/id', peerServer);
 
 app.get('/port', function(req, res) {
   res.json(process.env.PORT);
