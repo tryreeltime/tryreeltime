@@ -25,15 +25,20 @@ class EmotionsDisplay extends React.Component {
 			  	    </ul>
 			    </div>
 			  </div>
-			  <div onClick={(e)=>{
-			  	  console.log('Button clicked');
-			  	  this.props.socket.emit('buttonClick', e);
-			  }}>
-				  <button>R they really enjoying this tho?</button>
-			  </div>
 			</nav>
 		)
 	}
 }
 
 export default EmotionsDisplay;
+
+
+{/*
+//TODO: add button to 'videoBomb your peer'
+			  <div onClick={(e)=>{
+			  	  console.log('Button clicked');
+			  	  this.props.socket.emit('buttonClick', e);
+			  }}>
+				  <button>R they really enjoying this tho?</button>
+			  </div>
+*/}
