@@ -14,7 +14,6 @@ function recorddd (localStream, socket) {
             console.log('no stream? error in mediaRecoreder -- handleDataAvailable');
           }
         };
-        
 
         mediaRecorder.ondataavailable = handleDataAvailable;
         mediaRecorder.onstop = () => {

@@ -101,7 +101,7 @@ import _ from 'underscore';
       socket.emit('photoFile', data);
       socket.on('photoUrls', (data) => {
         console.log('photoUrls on the frontside!', data.publicUrl);
-        doAuth(data.publicUrl, username);
+        doAuth(data.publicUrl, username, socket);
       });
     } else {
       clearphoto();
@@ -109,7 +109,7 @@ import _ from 'underscore';
   }
 
  // for use in doAuth
-  function takemorepictures(query, username) {
+  function takemorepictures(query, username, socket) {
     var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -127,7 +127,7 @@ import _ from 'underscore';
     }
   }
 
-  function doAuth(image, username) {
+  function doAuth(image, username, socket) {
     var url = baseUrl + 'gallery/list_all';
 
     fetch(url, {
@@ -152,7 +152,7 @@ import _ from 'underscore';
         // timer used to ensure the pictures are somewhat different.
         for (let i = 0; i < 6; i++) {
           window.setTimeout( () => {
-            takemorepictures('enroll', username);
+            takemorepictures('enroll', username, socket);
           }, 1000);
         }
       }
