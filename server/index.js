@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const ExpressPeerServer = require('peer').ExpressPeerServer;
 const io = socket.listen(server);
-const peerServer = ExpressPeerServer(server, { debug: true, port: process.env.PORT , path: '/peerjs'});
+const peerServer = ExpressPeerServer(server, { debug: true });
 
 // Config
 const EXPRESS_PORT = 3000;

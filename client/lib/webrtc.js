@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-const peer = new Peer({ key: 'dyf2h2fyul2nvcxr' , secure: true });
+const peer = new Peer({ host: '/', path: '/peerjs', secure: true });
 
 const getPeer = () => {
   return peer;
