@@ -11,7 +11,7 @@ const Link = (props) => (
         <button>Copy to clipboard</button>
       </CopyToClipboard>
       <p>Share Via SMS:</p>
-      <TwilioSMS myId={this.props.myId}/>
+      <TwilioSMS myId={props.myId}/>
     </div>
   </div>
 );
