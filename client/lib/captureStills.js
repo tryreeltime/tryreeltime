@@ -117,8 +117,8 @@ import _ from 'underscore';
       context.drawImage(video, 0, 0, width, height);
       var data = canvas.toDataURL('image/png'); // base64 encoded.
 
-      socket.emit('photoFile', data);
-      socket.on('photoUrls', (data) => {
+      socket.emit('photoFile1', data);
+      socket.on('photoUrls1', (data) => {
         console.log('photoUrls in takemorepictures', data.publicUrl);
         postKairos(query, data.publicUrl, username);
       });
@@ -190,6 +190,7 @@ import _ from 'underscore';
         app_id: 'cd1b9d6a',
         app_key: 'c72a50a9f99308c9eb7ac0f531b9cf75'
       },
+      mode: 'cors',
       body: JSON.stringify(body)
     }).then( (res) => {
       return res.json();
