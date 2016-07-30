@@ -100,10 +100,12 @@ form {
 }
 
 .emotionEmoji {
-  width: 50;
-  height: 50;
-  border: 0;
-  padding: 0;
+  max-width: 50;
+  height: auto;
+}
+.giphy {
+  max-width: 50;
+  height: auto;
 }
 
 @keyframes fadeIn {

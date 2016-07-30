@@ -139,13 +139,12 @@ export default StyleSheet.create({
         "display": "none"
     },
     "emotionEmoji": {
-        "width": 50,
-        "height": 50,
-        "border": 0,
-        "paddingTop": 0,
-        "paddingRight": 0,
-        "paddingBottom": 0,
-        "paddingLeft": 0
+        "maxWidth": 50,
+        "height": "auto"
+    },
+    "giphy": {
+        "maxWidth": 50,
+        "height": "auto"
     },
     "link": {
         "width": "100%",
