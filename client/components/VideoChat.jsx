@@ -97,17 +97,17 @@ class VideoChat extends React.Component {
     navigator.mediaDevices.getUserMedia(constraints)
       .then( (localStream) => {
         console.log('stream after getUserMedia', localStream);
-         window.mediaRecorder = new MediaRecorder(localStream);
+         // window.mediaRecorder = new MediaRecorder(localStream);
          // setInterval recorddd();
          var socket = this.props.socket;
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
 
 
-          // setInterval(function(){
-          //   recorddd(localStream, socket);
-          //   console.log(localStream);
-          //   // var localStream = navigator.mediaDevices.getUserMedia(constraints);
-          // }, 30000);
+          setInterval(function(){
+            recorddd(localStream, socket);
+            console.log(localStream);
+            // var localStream = navigator.mediaDevices.getUserMedia(constraints);
+          }, 30000);
 
 
 
