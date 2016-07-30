@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-const peer = new Peer({ host: '/', path: '/peerjs', secure: true });
+const peer = new Peer({ host: '/', path: '/peerjs', port: '', secure: true });
 
 console.log('newest version');
 
