@@ -89,25 +89,17 @@ class VideoChat extends React.Component {
       video: true
     };
 
-
-
-    //WHEN THE COMPONENT MOUNTS, GET VID RIGHT AWAY! 
+    //WHEN THE COMPONENT MOUNTS, GET VID RIGHT AWAY!
     navigator.mediaDevices.getUserMedia(constraints)
       .then( (localStream) => {
         console.log('stream after getUserMedia', localStream);
-         // window.mediaRecorder = new MediaRecorder(localStream);
-         // setInterval recorddd();
          var socket = this.props.socket;
+         recorddd(localStream, socket);
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
-
-
           setInterval(function(){
             recorddd(localStream, socket);
             console.log(localStream);
-            // var localStream = navigator.mediaDevices.getUserMedia(constraints);
           }, 30000);
-
-
 
           return localStream;
       })
@@ -117,64 +109,14 @@ class VideoChat extends React.Component {
       })
       .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
-
-// LAST WORKING CODE
-    // navigator.mediaDevices.getUserMedia(constraints)
-
-    //   .then( (localStream) => {
-
-    //     console.log('stream after getUserMedia', localStream);
-
-    //     window.mediaRecorder = new MediaRecorder(localStream);
-    //     var recordedChunks = [];
-    //     var handleDataAvailable = (event) => {
-    //       if (event.data.size > 0) {
-    //         recordedChunks.push(event.data);
-    //       } else {
-    //         console.log('no stream? error in handleDataAvailable');
-    //       }
-    //     };
-    //     mediaRecorder.ondataavailable = handleDataAvailable;
-    //     mediaRecorder.onstop = () => {
-    //       console.log('stop fired');
-
-    //       var file = new File(recordedChunks, `userid.webm`, {
-    //         type: 'video/webm'
-    //       });
-
-    //       console.log('file', file);
-    //       this.props.socket.emit('videoFile', file);
-
-    //       var reader = new FileReader();
-
-    //       reader.onload = function( e ) {
-    //       }.bind( this );
-    //       reader.readAsText( file );
-
-    //     };
-
-    //     mediaRecorder.start();
-
-    //     window.setTimeout( () => {
-    //       mediaRecorder.stop();
-    //     }, 5000)
-    //     return localStream;
-    //   })
-    //   .then(function(whatisEVENHERE){
-    //     console.log('nutherCheck', whatisEVENHERE);
-    //     return whatisEVENHERE;
-    //   })
-    //   .then(this.setUpVideoStream)
-    //     .catch(console.error.bind(console));
   }
 
   setUpVideoStream(localStream) {
     const localVideo = document.querySelector('.local-video');
     localVideo.srcObject = localStream;
     console.log('setUpVideoStream is called');
-    this.setState({localStream: localStream});    
+    this.setState({localStream: localStream});
 
-    // this.establishNewCall(this.state.localStream, this.props.isSource ? null : this.props.peerId);
     if (!this.props.isSource) {
       this.makeNewCall(this.state.localStream, this.props.peerId);
     }
@@ -183,8 +125,6 @@ class VideoChat extends React.Component {
   handleNewCall(call) {
     this.chatCalls.push(call);
     call.on('stream', (remoteStream) => {
-      //THEN TEST THIS!! !! !! !! 
-      // recorddd(remoteStream, this.props.socket);
       var newRemoteVid = document.createElement('video');
       newRemoteVid.setAttribute('className', 'remote-video');
       newRemoteVid.setAttribute('autoPlay', 'true');
@@ -206,7 +146,6 @@ class VideoChat extends React.Component {
   establishNewCall(mediaStream, sourceId) {
     establishPeerCall(mediaStream, sourceId)
       .then((remoteStream) => {
-        // const remoteVideo = document.querySelector('.remote-video');
         var newRemoteVid = document.createElement('video');
         newRemoteVid.setAttribute('className', 'remote-video');
         newRemoteVid.setAttribute('autoPlay', 'true');
@@ -215,15 +154,6 @@ class VideoChat extends React.Component {
       })
       .catch(console.error.bind(console));
   }
-
-  /* filter classes:
-  ig-willow, ig-earlybird, ig-mayfair, ig-amaro, ig-xpro2, ig-toaster, ig-kelvin, ig-brannan
-
-  TODO: separate remote video filters and local video filters.
-  intended functionality:
-  - you can control your localVideo filter, and the socket emits your filter choice to the connected peers
-  - you receive filter info from connected peers and remoteVideo is filtered with those filters.
-  */
 
   changeFilter() {
     if (this.state.filtercounter < this.state.filterArray.length - 1) {
