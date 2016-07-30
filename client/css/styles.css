@@ -99,6 +99,13 @@ form {
   display: none;
 }
 
+.emotionEmoji {
+  width: 50;
+  height: 50;
+  border: 0;
+  padding: 0;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

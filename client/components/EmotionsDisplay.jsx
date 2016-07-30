@@ -25,15 +25,15 @@ class EmotionsDisplay extends React.Component {
 		// CUSTOM EMOTION LOGIC GOES HERE.
 
 		if (sortedEmotions[0].emotion === 'Smile') {
-			return <img src={'./../assets/happyEmotion.png'}/>
+			return <img className="emotionEmoji" src={'./../assets/happyEmotion.png'}/>
 		} else if (sortedEmotions[0].emotion === 'Surprise') {
-			return <img src={'./../assets/shockEmotion.png'}/>
+			return <img className="emotionEmoji" src={'./../assets/shockEmotion.png'}/>
 		} else if (sortedEmotions[0].emotion === 'Negativity') {
-			return <img src={'./../assets/angryEmotion.png'}/>
+			return <img className="emotionEmoji" src={'./../assets/angryEmotion.png'}/>
 		} else if (sortedEmotions[0].emotion === 'Attention') {
-			return <img src={'./../assets/attentionEmotion.png'}/>
+			return <img className="emotionEmoji" src={'./../assets/attentionEmotion.png'}/>
 		}
-		
+
 	}
 
 	render() {

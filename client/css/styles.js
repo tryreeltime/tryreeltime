@@ -49,6 +49,9 @@ export default StyleSheet.create({
         "display": "flex",
         "flexDirection": "row"
     },
+    "li": {
+        "display": "block"
+    },
     "video-container": {
         "flex": 1,
         "display": "flex",
@@ -134,6 +137,15 @@ export default StyleSheet.create({
     },
     "chat-submit": {
         "display": "none"
+    },
+    "emotionEmoji": {
+        "width": 50,
+        "height": 50,
+        "border": 0,
+        "paddingTop": 0,
+        "paddingRight": 0,
+        "paddingBottom": 0,
+        "paddingLeft": 0
     },
     "link": {
         "width": "100%",
