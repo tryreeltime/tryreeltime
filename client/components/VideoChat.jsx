@@ -99,12 +99,16 @@ class VideoChat extends React.Component {
          // setInterval recorddd();
          var socket = this.props.socket;
          //step 2-3: OR ON BUTTON CLICK -- send to chat?
-          // setInterval(console.log('hi'), 10000);
-          // setInterval(function(localStream){
 
-          //   recorddd(localStream, socket);
-          //   window.mediaRecorder = new MediaRecorder(localStream)
-          // }, 10000);
+
+          setInterval(function(){
+            recorddd(localStream, socket);
+            console.log(localStream);
+            // var localStream = navigator.mediaDevices.getUserMedia(constraints);
+          }, 30000);
+
+
+
           return localStream;
       })
       .then(function(whatisEVENHERE){
