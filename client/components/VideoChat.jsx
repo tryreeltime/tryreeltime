@@ -3,8 +3,6 @@ import React from 'react';
 import { getPeer, getMyId, establishPeerCall, establishPeerConnection} from '../lib/webrtc';
 import recorddd from '../lib/mediaRecorder';
 
-require('dotenv').config();
-
 class VideoChat extends React.Component {
   constructor(props) {
     super(props);
@@ -119,7 +117,7 @@ class VideoChat extends React.Component {
       })
       .then(this.setUpVideoStream)
         .catch(console.error.bind(console));
-    
+
 // LAST WORKING CODE
     // navigator.mediaDevices.getUserMedia(constraints)
 
