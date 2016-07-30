@@ -11,7 +11,7 @@ const Link = (props) => (
         <button>Copy to clipboard</button>
       </CopyToClipboard>
       <p>Share Via SMS:</p>
-      <TwilioSMS link={`http://salty-sands-27362.herokuapp.com/?id=${props.myId}`}/>
+      <TwilioSMS myId={this.props.myId}/>
     </div>
   </div>
 );
