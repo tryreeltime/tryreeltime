@@ -1,6 +1,6 @@
 import Peer from 'peerjs';
 
-const peer = new Peer({ /*key: 'dyf2h2fyul2nvcxr' , */host: 'https://salty-sands-27362.herokuapp.com', path: '/peerjs' });
+const peer = new Peer({ /*key: 'dyf2h2fyul2nvcxr' , */host: 'salty-sands-27362.herokuapp.com', path: '/peerjs' });
 
 const getPeer = () => {
   return peer;
