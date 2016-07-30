@@ -99,6 +99,7 @@ io.on('connection', (socket) => {
   socket.on('newCall', (peerid) => {
     console.log('New call detected');
     socket.broadcast.emit('newCall', peerid);
+  });
 
 // Video & Photo Harvesting events
   socket.on('videoFile', (theVideo) => {
@@ -120,7 +121,7 @@ peerServer.on('connection', function(id) {
   /* ........... */
   console.log('id is: ', id)
   console.log('connection detected');
-})
+});
 
 server.listen(process.env.PORT || EXPRESS_PORT);
 console.log(`Listening on port ${process.env.PORT || EXPRESS_PORT}`);
