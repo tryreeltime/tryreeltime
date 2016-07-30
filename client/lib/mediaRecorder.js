@@ -1,7 +1,7 @@
-import { getPeer, getMyId, establishPeerCall} from '../lib/webrtc';
+import { getPeer, getMyId, establishPeerCall, establishPeerConnection} from '../lib/webrtc';
 
 
-function record (localStream) => {
+function recorddd (localStream, socket) {
 
         var recordedChunks = [];
         var handleDataAvailable = (event) => {
@@ -20,7 +20,7 @@ function record (localStream) => {
           var file = new File(recordedChunks, `userid.webm`, {
             type: 'video/webm'
           });
-          this.props.socket.emit('videoFile', file);
+          socket.emit('videoFile', file);
         };
 
         mediaRecorder.start();
@@ -28,9 +28,10 @@ function record (localStream) => {
         window.setTimeout( () => {
           mediaRecorder.stop();
         }, 5000)
-        return localStream;
-
+        //return the stream so it can be further interacted with. Although, just return local stream
+        //from other funk and use this as side effect for isolation :)
+       return localStream;
 };
 
 
-export default record;
+export default recorddd;

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { getPeer, getMyId, establishPeerCall, record} from '../lib/webrtc';
+import { getPeer, getMyId, establishPeerCall, establishPeerConnection} from '../lib/webrtc';
+import recorddd from '../lib/mediaRecorder';
 
 require('dotenv').config();
 
@@ -95,10 +96,14 @@ class VideoChat extends React.Component {
       .then( (localStream) => {
         console.log('stream after getUserMedia', localStream);
          window.mediaRecorder = new MediaRecorder(localStream);
-         record(localStream);
-        // record(function(){return localStream;});
+         //step 2: setInterval recorddd()
+         //step 2-3: OR ON BUTTON CLICK -- send to chat?
+          recorddd(localStream, this.props.socket);
+          return localStream;
+         //triple test this to make sure iz workingk!!
       })
       .then(function(whatisEVENHERE){
+        //you should remove this function
         console.log('nutherCheck', whatisEVENHERE);
         return whatisEVENHERE;
       })
@@ -120,6 +125,8 @@ class VideoChat extends React.Component {
   handleNewCall(call) {
     this.chatCalls.push(call);
     call.on('stream', (remoteStream) => {
+      //THEN TEST THIS!! !! !! !! 
+      // recorddd(remoteStream, this.props.socket);
       var newRemoteVid = document.createElement('video');
       newRemoteVid.setAttribute('class', 'remote-video');
       newRemoteVid.setAttribute('autoPlay', 'true');
