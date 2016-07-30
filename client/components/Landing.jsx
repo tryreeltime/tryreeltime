@@ -17,7 +17,7 @@ const Landing = (props) => (
           <div className="intro-heading">But in your underwear</div>
           <button className="authText" onClick={props.handleShowChat}>Chat Only [no video files]</button>
           <p className="auth">For Auth Enter Username:</p>
-          <Auth className="auth" socket={props.socket} />
+          <Auth className="auth" placeholder="balls" socket={props.socket} />
           <p className="auth">Pose for the Camera - Facial Recognition Login:</p>
           <video id="video"></video>
           <canvas id="canvas"></canvas>
