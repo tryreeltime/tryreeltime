@@ -2,6 +2,8 @@ import Peer from 'peerjs';
 
 const peer = new Peer({ host: '/', path: '/peerjs', secure: true });
 
+console.log('newest version');
+
 const getPeer = () => {
   return peer;
 };
