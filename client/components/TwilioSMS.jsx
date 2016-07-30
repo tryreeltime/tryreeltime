@@ -14,7 +14,7 @@ class TwilioSMS extends React.Component {
     number = '+1' + number;
     let body = {
         number: number,
-        message: this.props.myId
+        message: `https://salty-sands-27362.herokuapp.com/?id=${this.props.myId}`
     };
     fetch('/message', {
       method: 'POST',
