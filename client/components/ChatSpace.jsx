@@ -79,7 +79,7 @@ class ChatSpace extends React.Component {
   render() {
     return (
       <div className="chat-space">
-        <VideoChat isSource={this.props.isSource} peerId={this.props.peerId} socket={this.props.socket}/>
+        <VideoChat isSource={this.props.isSource} peerId={this.props.peerId} socket={this.props.socket} renderToDom={this.props.renderToDom}/>
         <div className="chat-container">
           <ul>
             {this.state.messages.map((message, i) => <Message message={message} key={i} />)}

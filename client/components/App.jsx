@@ -4,10 +4,12 @@ import Landing from './Landing';
 import Link from './Link';
 import Video from "./Video.jsx";
 import ChatSpace from "./ChatSpace.jsx";
+import EmotionsDisplay from "./EmotionsDisplay.jsx";
 
 import { getMyId, establishPeerConnection } from '../lib/webrtc';
 import readFile from '../lib/fileReader';
 import appendChunk from '../lib/mediaSource';
+import calculateEmotions from '../lib/calculateEmotions';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,7 +26,13 @@ class App extends React.Component {
       peerId: params.get('id'),
       showLanding: isSource,
       showLink: isSource,
-      showBody: !isSource
+      showBody: !isSource,
+      emotions: {
+        0: {emotion: 'attention', val: 0},
+        1: {emotion: 'negative', val: 0},
+        2: {emotion: 'smile', val: 50},
+        3: {emotion: 'surprise', val: 50}
+      }
     };
 
   this.props.socket.on('photoData', data => {
@@ -99,14 +107,23 @@ class App extends React.Component {
     });
   }
 
+  renderToDom (data) {
+    let currentEmotions = calculateEmotions(data);
+    console.log(currentEmotions);
+    this.setState({emotions: currentEmotions});
+  }
+
   render() {
     return (
       <div>
         {this.state.showLanding ? <Landing socket={this.props.socket} setFile={this.setFile} /> : null}
         {this.state.showLink ? <Link myId={this.state.myId} /> : null}
         {this.state.showBody ? <div className="wrapper">
-          <Video socket={this.props.socket} />
-          <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} />
+          <EmotionsDisplay emotions={this.state.emotions} />
+          <span id ='video'>
+            <Video socket={this.props.socket} />
+          </span>
+          <ChatSpace socket={this.props.socket} isSource={this.state.isSource} peerId={this.state.peerId} renderToDom={this.renderToDom.bind(this)}/>
         </div> : null}
       </div>
     );
