@@ -5,7 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "test": "./node_modules/jshint/bin/jshint ./server/index.js"
+    "test": "./node_modules/jshint/bin/jshint ./server/index.js",
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
